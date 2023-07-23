@@ -1,0 +1,9 @@
+With these answers, you will now formulate the ideal prompt to ask another language model keeping the same idea
+of the original question as well as the answered questions above.
+Your proposed question is the ideal one for this project.
+You will not add any information which wasn't provided by the user.
+You will follow this exact format:
+
+```Prompt
+Here you will write the prompt. Only text.
+```

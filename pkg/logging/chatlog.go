@@ -2,15 +2,11 @@ package logging
 
 import (
 	"encoding/json"
+	"fmt"
+	"github.com/JonathanPDB/chattronics/pkg/config"
 	"log"
 	"os"
-	"strings"
-	"time"
 )
-
-const baseLogPath = "/Users/I564244/Personal/TCC/chattronics/logs/"
-
-var logDatetimePath string
 
 type ChatLogger struct {
 	logFilePath string
@@ -25,31 +21,12 @@ type InteractionLog struct {
 	FinishReason     string      `json:"finish_reason"`
 }
 
-func init() {
-	if _, err := os.Stat(baseLogPath); os.IsNotExist(err) {
-		err = os.Mkdir(baseLogPath, os.ModePerm)
-		if err != nil {
-			log.Fatalf("Error to create logs folder: %s", err.Error())
-		}
-	}
-
-	date := time.Now().Format("Jan02_15-04-05")
-	logDatetimePath = baseLogPath + date
-
-	if strings.HasSuffix(os.Args[0], ".test") {
-		logDatetimePath += "_TEST"
-	}
-
-	logDatetimePath += "/"
-
-	err := os.Mkdir(logDatetimePath, os.ModePerm)
-	if err != nil {
-		log.Fatalf("Error to create specific log folder: %s", err.Error())
-	}
-}
-
 func NewChatLogger(persona string) *ChatLogger {
-	path := logDatetimePath + persona + ".json"
+	if config.LogFolderPath == "" {
+		log.Fatalf("LogFolderPath not set, can't initialize %s chat logger.", persona)
+	}
+
+	path := config.LogFolderPath + persona + ".json"
 	f, err := os.OpenFile(path, os.O_RDWR|os.O_CREATE|os.O_APPEND, 0666)
 	if err != nil {
 		log.Fatalf("error opening file: %s", err.Error())
@@ -62,7 +39,7 @@ func NewChatLogger(persona string) *ChatLogger {
 func (l *ChatLogger) LogInteraction(incomingLog InteractionLog) error {
 	content, err := os.ReadFile(l.logFilePath)
 	if err != nil {
-		return err
+		return fmt.Errorf("failed to read log path: %w", err)
 	}
 
 	var logs []InteractionLog
@@ -70,19 +47,19 @@ func (l *ChatLogger) LogInteraction(incomingLog InteractionLog) error {
 	if len(content) != 0 {
 		err = json.Unmarshal(content, &logs)
 		if err != nil {
-			return err
+			return fmt.Errorf("failed to unmarshal interaction log content: %w", err)
 		}
 	}
 
 	logs = append(logs, incomingLog)
 	logsBytes, err := json.MarshalIndent(logs, "", "  ")
 	if err != nil {
-		return err
+		return fmt.Errorf("failed to marshall log bytes: %w", err)
 	}
 
 	err = os.WriteFile(l.logFilePath, logsBytes, os.ModePerm)
 	if err != nil {
-		return err
+		return fmt.Errorf("failed to write log file: %w", err)
 	}
 
 	return nil

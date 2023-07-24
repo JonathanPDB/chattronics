@@ -2,17 +2,9 @@ package chat
 
 import (
 	"github.com/JonathanPDB/chattronics/pkg/logging"
-	"io"
-	"os"
 	"reflect"
 	"strings"
 )
-
-var stdin io.Reader
-
-func init() {
-	stdin = os.Stdin
-}
 
 type MarkdownBlock struct {
 	Language string   `json:"language"`
@@ -20,7 +12,7 @@ type MarkdownBlock struct {
 	Block    string   `json:"block"`
 }
 
-func ExtractMarkdownBlocks(message string) []MarkdownBlock {
+func extractMarkdownBlocks(message string) []MarkdownBlock {
 	var codeBlocks []MarkdownBlock
 
 	splitMessages := strings.Split(message, "```")
@@ -39,8 +31,8 @@ func ExtractMarkdownBlocks(message string) []MarkdownBlock {
 	return codeBlocks
 }
 
-func ExtractSingleBlock(message, language string) MarkdownBlock {
-	blocks := ExtractMarkdownBlocks(message)
+func extractSingleBlock(message, language string) MarkdownBlock {
+	blocks := extractMarkdownBlocks(message)
 	var desiredBlock MarkdownBlock
 	for _, block := range blocks {
 		if strings.ToLower(block.Language) == strings.ToLower(language) {

@@ -2,6 +2,7 @@ package graph
 
 import (
 	"github.com/JonathanPDB/chattronics/pkg/config"
+	"github.com/stretchr/testify/assert"
 	"testing"
 )
 
@@ -26,6 +27,9 @@ func getMockGraphvizDiagram() string {
 
 func TestRenderGraph(t *testing.T) {
 	t.Run("Successfully render graphviz diagram", func(t *testing.T) {
-		config.RunFolderPath = ""
+		config.CreateFolders()
+		err := RenderGraph(getMockGraphvizDiagram())
+		assert.NoError(t, err)
+		assert.FileExists(t, config.RunFolderPath+"diagram.svg")
 	})
 }

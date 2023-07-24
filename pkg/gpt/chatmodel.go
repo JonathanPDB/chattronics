@@ -14,6 +14,13 @@ type ChatModel struct {
 	logger    *logging.ChatLogger
 }
 
+type ChatResponse struct {
+	Message            string
+	Reason             string
+	PromptTokenCount   int
+	ResponseTokenCount int
+}
+
 func NewChatModel(engine Engine, alias, systemPrompt string) ChatModel {
 	return ChatModel{
 		engine: engine,

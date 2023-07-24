@@ -1,26 +1,41 @@
 package logging
 
 import (
+	"github.com/JonathanPDB/chattronics/pkg/config"
 	"go.uber.org/zap"
 	"go.uber.org/zap/zapcore"
 	"log"
+	"os"
 	"time"
 )
 
-type Field = zap.Field
-
 var stdLogger *zap.Logger
 
-func init() {
+type Field = zap.Field
+
+func InitializeStandardLogger() {
+	if config.LogFolderPath == "" {
+		log.Fatalf("LogFolderPath not set, can't initialize standard logger.")
+	}
+
 	cfg := zap.NewProductionConfig()
 	cfg.EncoderConfig.MessageKey = "message"
 	cfg.EncoderConfig.TimeKey = "ts"
-	cfg.EncoderConfig.EncodeLevel = zapcore.CapitalColorLevelEncoder
+	// cfg.EncoderConfig.EncodeLevel = zapcore.CapitalColorLevelEncoder
 	cfg.EncoderConfig.EncodeTime = zapcore.TimeEncoderOfLayout(time.RFC3339)
 	cfg.Encoding = "console"
 	cfg.Level.SetLevel(zap.DebugLevel)
 	cfg.DisableCaller = false
-	cfg.OutputPaths = []string{"stdout"}
+
+	stdLogsFile := config.LogFolderPath + "console.logs"
+
+	f, err := os.OpenFile(stdLogsFile, os.O_RDWR|os.O_CREATE|os.O_APPEND, 0666)
+	if err != nil {
+		log.Fatalf("error opening file: %s", err.Error())
+	}
+	defer f.Close()
+
+	cfg.OutputPaths = []string{stdLogsFile}
 
 	zapLogger, err := cfg.Build()
 	if err != nil {

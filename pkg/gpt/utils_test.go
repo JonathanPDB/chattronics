@@ -1,8 +1,8 @@
 package gpt
 
 import (
-	"chattronics/pkg/logging"
 	"fmt"
+	"github.com/JonathanPDB/chattronics/pkg/logging"
 	"github.com/stretchr/testify/assert"
 	"testing"
 )

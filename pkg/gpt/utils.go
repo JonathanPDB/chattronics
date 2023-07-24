@@ -1,7 +1,7 @@
 package gpt
 
 import (
-	"chattronics/pkg/logging"
+	"github.com/JonathanPDB/chattronics/pkg/logging"
 	"github.com/adrg/exrates"
 )
 

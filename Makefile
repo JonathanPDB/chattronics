@@ -1,26 +1,24 @@
 PROJECT=chattronics
 
-.PHONY: build
-build:
-	go build -o chattronics .
+run-mock:
+	@go build -o $(PROJECT) ./cmd/$(PROJECT)/mock.go
+	@./$(PROJECT) --mock --model=GPT3Dot5Turbo
+	@make clean
+
+run-real:
+	@go build -o $(PROJECT) ./cmd/$(PROJECT)/chattronics.go
+	@./$(PROJECT) --mcok=false --model=GPT3Dot5Turbo --temperature=0.1
+	@make clean
 
 clean:
-	rm chattronics
-	find ./logs -type d -empty -delete
-
-run-mock: build
-	./chattronics --mock --model=GPT3Dot5Turbo
-	make clean
-
-run-real: build
-	./chattronics --mcok=false --model=GPT3Dot5Turbo --temperature=0.1
-	make clean
+	@rm -f $(PROJECT)
+	@find ./runs -type d -empty -delete
 
 SHELL=bash
-delete-logs:
-	@read -p "Are you sure you want delete all logs? [y/n]" -n 1 -r; \
+delete-run-folder:
+	@read -p "Are you sure you want delete all run folders? [y/n]" -n 1 -r; \
 	if [[ $$REPLY =~ ^[Yy] ]]; \
 	then \
-		rm -rf ./logs; \
+		rm -rf ./runs; \
 	fi
 	@echo " Logs deleted."

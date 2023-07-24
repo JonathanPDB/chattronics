@@ -19,6 +19,16 @@ func NewMockGPT(model string) Engine {
 	}
 }
 
+func (m *MockGPT) SendChat(messages []openai.ChatCompletionMessage) (ChatResponse, error) {
+	i := m.counter
+	m.counter++
+	return m.responses[i], nil
+}
+
+func (m *MockGPT) GetModel() string {
+	return m.model
+}
+
 func initializeMockResponses() []ChatResponse {
 	return []ChatResponse{{
 		Message:            prompts.MockQuestionsResponse,
@@ -31,19 +41,9 @@ func initializeMockResponses() []ChatResponse {
 		ResponseTokenCount: 80,
 		PromptTokenCount:   120,
 	}, {
-		Message:            prompts.MockYumlResponse,
+		Message:            prompts.MockDiagramResponse,
 		Reason:             string(openai.FinishReasonStop),
 		ResponseTokenCount: 50,
 		PromptTokenCount:   80,
 	}}
-}
-
-func (m *MockGPT) SendChat(messages []openai.ChatCompletionMessage) (ChatResponse, error) {
-	i := m.counter
-	m.counter++
-	return m.responses[i], nil
-}
-
-func (m *MockGPT) GetModel() string {
-	return m.model
 }

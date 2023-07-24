@@ -7,25 +7,13 @@ import (
 	"github.com/sashabaranov/go-openai"
 )
 
-type Engine interface {
-	SendChat(messages []openai.ChatCompletionMessage) (ChatResponse, error)
-	GetModel() string
-}
-
 type GPT struct {
 	model       string
 	client      *openai.Client
 	temperature float32
 }
 
-type ChatResponse struct {
-	Message            string
-	Reason             string
-	PromptTokenCount   int
-	ResponseTokenCount int
-}
-
-func NewGPTEngine(model, apikey string, temperature float32) Engine {
+func NewGPT(model, apikey string, temperature float32) Engine {
 	return &GPT{
 		model:       model,
 		client:      openai.NewClient(apikey),

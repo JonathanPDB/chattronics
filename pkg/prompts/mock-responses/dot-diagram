@@ -1,13 +1,18 @@
-```yUML
-// Sweet Class Diagram
-// -------------------
+```dot
+digraph example_graph {
+    // Define node styles
+    node [shape=ellipse, fontname="Arial", color="blue"];
 
-// Chain elements like this
-[Customer]<>-orders*>[Order]++-0..*>[LineItem]
+    // Define nodes
+    A [label="Node A"];
+    B [label="Node B"];
+    C [label="Node C"];
+    D [label="Node D"];
 
-// Add notes
-[Order]-[note: Aggregate Root ala DDD]
-
-// Add more detail
-[≪IDisposable≫;Customer|+forname: string;+surname: string;-password: string|login(user,pass)]
+    // Define edges
+    A -> B [label="Edge 1", color="red"];
+    B -> C [label="Edge 2", color="green"];
+    C -> D [label="Edge 3", color="blue"];
+    D -> A [label="Edge 4", color="purple"];
+}
 ```

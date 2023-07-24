@@ -1,70 +1,69 @@
 package chat
 
 import (
-	"chattronics/pkg/gpt"
-	"chattronics/pkg/logging"
-	"chattronics/pkg/prompts"
 	"fmt"
-	"strings"
+	"github.com/JonathanPDB/chattronics/pkg/gpt"
+	"github.com/JonathanPDB/chattronics/pkg/graph"
+	"github.com/JonathanPDB/chattronics/pkg/prompts"
 )
 
+var engine *gpt.Engine
+
 func StartConversation(gptEngine *gpt.Engine) error {
-	Inquisitor := gpt.NewChatModel(*gptEngine, "inquisitor", prompts.InquistorSystem)
+	engine = gptEngine
 
-	fmt.Println("Send message")
-	Inquisitor.AddUserMessage(readConsole())
+	greetingsMessage()
+	initialUserPrompt := readConsole()
 
-	response, err := Inquisitor.SendChat()
+	reviewedPrompt, err := reviewerChat(initialUserPrompt)
 	if err != nil {
-		return err
+		return fmt.Errorf("ReviewerChat: %w", err)
 	}
 
-	questionBlocks := ExtractMarkdownBlocks(response)
-	if len(questionBlocks) != 1 {
-		logging.Warn("Received two code blocks, when only 1 was expected")
-	}
-
-	questionBlock := questionBlocks[0]
-	if questionBlock.Language != "Questions" {
-		logging.Warn("GPT did not follow 'Questions' language name in markdown block")
-	}
-
-	answers := askQuestions(questionBlock.Lines)
-
-	newUserPrompt := prompts.FormulatePrefix + answers + prompts.FormulateSuffix
-	Inquisitor.AddUserMessage(newUserPrompt)
-
-	idealPromptResponse, err := Inquisitor.SendChat()
+	architectureDiagram, err := architectChat(reviewedPrompt)
 	if err != nil {
-		return err
+		return fmt.Errorf("ArchitectChat: %w", err)
 	}
 
-	idealPrompt := ExtractMarkdownBlocks(idealPromptResponse)[0].Block
-
-	EngineerTopDown := gpt.NewChatModel(*gptEngine, "engineerTopDown", prompts.TopDownSystem)
-	EngineerTopDown.AddUserMessage(idealPrompt)
-
-	architectureReponse, err := EngineerTopDown.SendChat()
+	err = graph.RenderGraph(architectureDiagram)
 	if err != nil {
-		return err
+		return fmt.Errorf("RenderGraph: %w", err)
 	}
-
-	yuml := ExtractMarkdownBlocks(architectureReponse)[0].Block
-
-	fmt.Println(yuml)
 	return nil
 }
 
-func askQuestions(questions []string) string {
-	var answers []string
-	fmt.Println("GPT wants to ask some questions to make the problem clearer. Please answer one by one.")
-	fmt.Println("")
-	for i, question := range questions {
-		fmt.Println(question)
-		fmt.Printf("Answer: ")
-		questionNumber := string(rune(i+1)) + ". "
-		answers = append(answers, questionNumber+readConsole())
+func reviewerChat(initialUserPrompt string) (string, error) {
+	reviewer := gpt.NewChatModel(*engine, "reviewer", prompts.ReviewerSystem)
+
+	reviewer.AddUserMessage(initialUserPrompt)
+
+	response, err := reviewer.SendChat()
+	if err != nil {
+		return "", fmt.Errorf("failed to send first reviewer chat completion: %w", err)
 	}
 
-	return strings.Join(answers, "\n")
+	questions := extractSingleBlock(response, "Questions").Lines
+	answers := askQuestions(questions)
+
+	newUserPrompt := prompts.FormulatePrefix + answers + prompts.FormulateSuffix
+	reviewer.AddUserMessage(newUserPrompt)
+
+	response, err = reviewer.SendChat()
+	if err != nil {
+		return "", fmt.Errorf("failed to send second reviewer chat completion: %w", err)
+	}
+
+	return extractSingleBlock(response, "Prompt").Block, nil
+}
+
+func architectChat(reformulatedPrompt string) (string, error) {
+	architect := gpt.NewChatModel(*engine, "architect", prompts.ArchitectSystem)
+	architect.AddUserMessage(reformulatedPrompt)
+
+	response, err := architect.SendChat()
+	if err != nil {
+		return "", fmt.Errorf("failed to send architect chat completion: %w", err)
+	}
+
+	return extractSingleBlock(response, "dot").Block, nil
 }

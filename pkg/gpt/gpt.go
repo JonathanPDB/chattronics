@@ -1,93 +1,59 @@
 package gpt
 
 import (
-	"chattronics/pkg/logging"
+	"context"
+	"fmt"
+	"github.com/JonathanPDB/chattronics/pkg/logging"
 	"github.com/sashabaranov/go-openai"
-	"strings"
 )
 
-type ChatModel struct {
-	engine    Engine
-	prompt    []openai.ChatCompletionMessage
-	totalCost float64
-	logger    *logging.ChatLogger
+type Engine interface {
+	SendChat(messages []openai.ChatCompletionMessage) (ChatResponse, error)
+	GetModel() string
 }
 
-func NewChatModel(engine Engine, alias, systemPrompt string) ChatModel {
-	return ChatModel{
-		engine: engine,
-		prompt: []openai.ChatCompletionMessage{{
-			Role:    SystemRole,
-			Content: systemPrompt,
-		}},
-		logger: logging.NewChatLogger(alias),
+type GPT struct {
+	model       string
+	client      *openai.Client
+	temperature float32
+}
+
+type ChatResponse struct {
+	Message            string
+	Reason             string
+	PromptTokenCount   int
+	ResponseTokenCount int
+}
+
+func NewGPTEngine(model, apikey string, temperature float32) Engine {
+	return &GPT{
+		model:       model,
+		client:      openai.NewClient(apikey),
+		temperature: temperature,
 	}
 }
 
-func (m *ChatModel) AddUserMessage(message string) {
-	if m.prompt[len(m.prompt)-1].Role == UserRole {
-		logging.Warn("adding back-to-back user prompts")
+func (gpt *GPT) SendChat(messages []openai.ChatCompletionMessage) (ChatResponse, error) {
+	req := openai.ChatCompletionRequest{
+		Model:       gpt.model,
+		Messages:    messages,
+		Temperature: gpt.temperature,
 	}
-
-	m.prompt = append(m.prompt, openai.ChatCompletionMessage{
-		Role:    UserRole,
-		Content: message,
-	})
-}
-
-func (m *ChatModel) SendChat() (string, error) {
-	resp, err := m.engine.SendChat(m.prompt)
+	resp, err := gpt.client.CreateChatCompletion(context.Background(), req)
 	if err != nil {
-		return "", err
+		return ChatResponse{}, fmt.Errorf("failed to get OpenAPI chat completion: %w", err)
 	}
 
-	if resp.Reason != string(openai.FinishReasonStop) {
-		logging.Warn("Finish Reason was not stop", logging.AddField("finish_reason", resp.Reason))
-	}
+	logging.Debug("Successfully got chat completion")
 
-	m.totalCost += m.calculateCost(resp.PromptTokenCount, resp.ResponseTokenCount)
-
-	err = m.log(m.prompt, resp)
-	if err != nil {
-		return "", err
-	}
-
-	err = m.log(m.prompt, resp)
-	if err != nil {
-		return "", err
-	}
-
-	m.prompt = append(m.prompt, openai.ChatCompletionMessage{
-		Role:    AssistantRole,
-		Content: resp.Message,
-	})
-
-	return resp.Message, nil
+	return ChatResponse{
+		Message:            resp.Choices[0].Message.Content,
+		Reason:             string(resp.Choices[0].FinishReason),
+		PromptTokenCount:   resp.Usage.PromptTokens,
+		ResponseTokenCount: resp.Usage.CompletionTokens,
+	}, nil
 }
 
-func (m *ChatModel) calculateCost(inputTokens, outputTokens int) float64 {
-	if strings.HasPrefix(m.engine.GetModel(), GPT4Prefix) {
-		inputCostUSD := (float64(inputTokens) * GPT4CostInput) / 1000
-		outputCostUSD := (float64(outputTokens) * GPT4CostOutput) / 1000
-		return getBRLfromUSD(inputCostUSD + outputCostUSD)
-	}
-
-	if strings.HasPrefix(m.engine.GetModel(), GPT3_5Prefix) {
-		inputCostUSD := (float64(inputTokens) * GPT3_5CostInput) / 1000
-		outputCostUSD := (float64(outputTokens) * GPT3_5CostOutput) / 1000
-		return getBRLfromUSD(inputCostUSD + outputCostUSD)
-	}
-	logging.Warn("Failed to find model prefix to calculate cost")
-	return 0.0
-}
-
-func (m *ChatModel) log(prompt []openai.ChatCompletionMessage, r ChatResponse) error {
-	return m.logger.LogInteraction(logging.InteractionLog{
-		Prompt:           prompt,
-		ResponseMessage:  r.Message,
-		InputTokenCount:  r.PromptTokenCount,
-		OutputTokenCount: r.ResponseTokenCount,
-		Cost:             m.calculateCost(r.PromptTokenCount, r.ResponseTokenCount),
-		FinishReason:     r.Reason,
-	})
+func (gpt *GPT) GetModel() string {
+	return gpt.model
 }

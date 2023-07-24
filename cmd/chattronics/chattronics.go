@@ -11,16 +11,15 @@ import (
 var (
 	model       string
 	temperature float64
-	mock        bool
 )
 
 func init() {
-	flag.StringVar(&model, "model", gpt.GPT3_5Turbo, "GPT model version")
+	flag.StringVar(&model, "model", "gpt-3.5-turbo", "GPT model version")
 	flag.Float64Var(&temperature, "temperature", 0.1, "GPT temperature. Higher values, higher variability")
-	flag.BoolVar(&mock, "mock", true, "Use mock gpt instead of real (priced) model")
 }
 
 func main() {
+	flag.Parse()
 	config.CreateFolders()
 	apiKey := config.LoadApiKeyEnvVar()
 	logging.InitializeStandardLogger()

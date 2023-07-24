@@ -1,13 +1,21 @@
 PROJECT=chattronics
 
+.PHONY: build-mock
+build-mock:
+	@go build -o $(PROJECT) ./cmd/$(PROJECT)/mock.go
+
+.PHONY: build-real
+build-real:
+	@go build -o $(PROJECT) ./cmd/$(PROJECT)/chattronics.go
+
 run-mock:
 	@go build -o $(PROJECT) ./cmd/$(PROJECT)/mock.go
-	@./$(PROJECT) --mock --model=GPT3Dot5Turbo
+	@./$(PROJECT)
 	@make clean
 
 run-real:
 	@go build -o $(PROJECT) ./cmd/$(PROJECT)/chattronics.go
-	@./$(PROJECT) --mcok=false --model=GPT3Dot5Turbo --temperature=0.1
+	@./$(PROJECT) -model=$(model) -temperature=$(temperature)
 	@make clean
 
 clean:
@@ -16,7 +24,7 @@ clean:
 
 SHELL=bash
 delete-run-folder:
-	@read -p "Are you sure you want delete all run folders? [y/n]" -n 1 -r; \
+	@read -p "Are you sure you want delete all run folders? [y/n]\n" -n 1 -r; \
 	if [[ $$REPLY =~ ^[Yy] ]]; \
 	then \
 		rm -rf ./runs; \

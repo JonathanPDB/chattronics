@@ -41,8 +41,7 @@ runs
         ├── reviewer.json
         └── architect.json
 ```
-Diagram, circuits and other outfiles are stored in the specific run folder,
-while all logs are stored in `logs`. The `console.logs` file is basically
+Diagrams, circuits and other output files are stored in the specific run folder and all logs are stored in `logs`. The `console.logs` file is basically
 the stdout of the application, i.e., Debug, Info, Warn, Error and Fatal
 logs will be sent here. The json logs are the interactions with GPT in 
 structured form. The name of these json files are referring to the persona

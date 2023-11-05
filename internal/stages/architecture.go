@@ -9,9 +9,9 @@ import (
 	"strings"
 )
 
-func DesignArchitecture(m *gpt.GPT, msgs gpt.Messages) (gpt.Messages, error) {
+func DesignArchitecture(m *gpt.GPT, i interaction.User, msgs gpt.Messages) (gpt.Messages, error) {
 	interaction.PrintAuxMessage("Project Description: ")
-	description := interaction.ReadConsole()
+	description := i.ReadConsole()
 
 	msgs = gpt.ReplaceSystemPrompt(msgs, prompts.ArchitectureQuestionsSystem)
 	msgs = gpt.AddUserMessage(msgs, description)
@@ -21,21 +21,22 @@ func DesignArchitecture(m *gpt.GPT, msgs gpt.Messages) (gpt.Messages, error) {
 	}
 	msgs = gpt.AddAssistantMessage(msgs, response)
 
-	questions := interaction.ExtractSingleBlock(response, "Questions").Lines
+	jsonResponse, err := interaction.ExtractJsonSlice(response)
+	questions := jsonResponse["questions"]
 	interaction.PrintAppMessage("GPT wants to ask some questions to make the problem clearer. Please answer one by one.\n\n")
-	answers := interaction.AskQuestions(questions)
+	answers := i.AskQuestions(questions)
 
 	interaction.PrintAppMessage("Are there any additional comments you would like to add? If not, answer \"no\".\n")
-	additionComment := interaction.ReadConsole()
+	additionComment := i.ReadConsole()
 	if strings.ToLower(additionComment) != "no" {
 		answers = strings.Join([]string{answers, "Additional Comment: " + additionComment}, "\n")
 	}
 
 	msgs = gpt.ReplaceSystemPrompt(msgs, prompts.ArchitectureDesignSystem)
-	return architectureSatisfactionLoop(m, msgs, answers)
+	return architectureSatisfactionLoop(m, i, msgs, answers)
 }
 
-func architectureSatisfactionLoop(m *gpt.GPT, originalMsgs gpt.Messages, userInput string) (gpt.Messages, error) {
+func architectureSatisfactionLoop(m *gpt.GPT, i interaction.User, originalMsgs gpt.Messages, userInput string) (gpt.Messages, error) {
 	var compiledUserInputs []string
 	var response string
 	var err error
@@ -51,8 +52,8 @@ func architectureSatisfactionLoop(m *gpt.GPT, originalMsgs gpt.Messages, userInp
 		}
 		msgs = gpt.AddAssistantMessage(msgs, response)
 
-		graphString := interaction.ExtractSingleBlock(response, "Graph").Block
-		explanations := interaction.ExtractSingleBlock(response, "Explanations").Block
+		graphString := interaction.ExtractMarkdown(response, "Graph").Block
+		explanations := interaction.ExtractMarkdown(response, "Explanations").Block
 
 		filename := fmt.Sprintf("diagram_%d", c)
 		err = graph.RenderGraph(graphString, filename)
@@ -61,14 +62,14 @@ func architectureSatisfactionLoop(m *gpt.GPT, originalMsgs gpt.Messages, userInp
 		}
 		interaction.PrintGPTMessage(explanations + "\n\n")
 
-		isSatisfied := interaction.IsUserSatisfied()
+		isSatisfied := i.IsUserSatisfied()
 		if isSatisfied {
 			break
 		}
 
 		interaction.PrintAppMessage("Please provide some feedback for the model, so it can improve the design.\n")
 		interaction.PrintAuxMessage("Feedback: ")
-		userInput = prompts.ArchitectureFeedback + interaction.ReadConsole()
+		userInput = prompts.ArchitectureFeedback + i.ReadConsole()
 	}
 
 	originalMsgs = gpt.AddUserMessage(originalMsgs, strings.Join(compiledUserInputs, "\n"))

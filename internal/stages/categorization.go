@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"new-chattronics/internal/gpt"
 	"new-chattronics/internal/interaction"
+	"new-chattronics/internal/logging"
 	"new-chattronics/internal/prompts"
 	"strings"
 )
@@ -28,7 +29,7 @@ func Categorize(m *gpt.GPT, msgs gpt.Messages) (map[string]string, error) {
 	if err != nil {
 		return nil, fmt.Errorf("failed to send categories message")
 	}
-	categoryLines := interaction.ExtractSingleBlock(response, "categories").Lines
+	categoryLines := interaction.ExtractMarkdown(response, "categories").Lines
 
 	categories, err := parseCategoriesIntoMap(categoryLines)
 	if err != nil {
@@ -55,6 +56,8 @@ func parseCategoriesIntoMap(categoryLines []string) (map[string]string, error) {
 
 		categoriesMap[blockName] = blockCategory
 	}
+
+	logging.Debug("parsed categories", logging.AddField("categories", categoriesMap))
 
 	return categoriesMap, nil
 }

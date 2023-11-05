@@ -1,5 +1,2 @@
-You will be asked to provide details on the sensory part of a project.
-You must find out what are defining requirements of the sensor, and if the
-user does not know, provide them with reasonable values.
-You must find out exactly what type and model of sensor will be used and
-provide at least one suggestion.
+You must find out what are defining requirements of the initial conditioning, and if the user does not know, provide them with reasonable values.
+The initial conditioning stage must support the chosen sensor as well as provide the expected output for the next stage.

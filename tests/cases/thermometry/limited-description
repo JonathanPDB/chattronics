@@ -1,0 +1,4 @@
+I have to design a project to measure the temperature of the water inside a Beaker.
+To do this I must use a non-linear thermistor and, after linearization, measure the voltage using a common multimeter.
+The temperature of the water is between freezing and boiling limits.
+The maximum error should be 1%.

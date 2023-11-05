@@ -19,7 +19,7 @@ func TestMarkdownExtractCodeBlocks(t *testing.T) {
 			},
 			Block: "package main\n\nfunc main() {\n\n}",
 		}}
-		actualOutput := extractMarkdownBlocks(givenInput)
+		actualOutput := extractAllMarkdownBlocks(givenInput)
 
 		assert.EqualValues(t, expectedOutput, actualOutput)
 	})
@@ -37,7 +37,7 @@ func TestMarkdownExtractCodeBlocks(t *testing.T) {
 			},
 			Block: "package main\n\nfunc main() {\n\n}",
 		}}
-		actualOutput := extractMarkdownBlocks(givenInput)
+		actualOutput := extractAllMarkdownBlocks(givenInput)
 
 		assert.EqualValues(t, expectedOutput, actualOutput)
 	})
@@ -63,7 +63,7 @@ func TestMarkdownExtractCodeBlocks(t *testing.T) {
 		},
 		}
 
-		actualOutput := extractMarkdownBlocks(givenInput)
+		actualOutput := extractAllMarkdownBlocks(givenInput)
 
 		assert.EqualValues(t, expectedOutput, actualOutput)
 	})
@@ -85,7 +85,7 @@ func TestExtractSingleBlock(t *testing.T) {
 			Block: "package main\n\nfunc main() {\n\n}",
 		}
 
-		actualResponse := ExtractSingleBlock(givenInput, givenLanguage)
+		actualResponse := ExtractMarkdown(givenInput, givenLanguage)
 
 		assert.EqualValues(t, expectedResponse, actualResponse)
 	})
@@ -101,8 +101,23 @@ func TestExtractSingleBlock(t *testing.T) {
 			Block: "print(\"Hello World\")",
 		}
 
-		actualResponse := ExtractSingleBlock(givenInput, givenLanguage)
+		actualResponse := ExtractMarkdown(givenInput, givenLanguage)
 
 		assert.EqualValues(t, expectedResponse, actualResponse)
+	})
+}
+
+func TestExtractJSON(t *testing.T) {
+	t.Run("Successfully extract JSON from message", func(t *testing.T) {
+		givenMessage := `This is your response:\n\n{"question1":"What is the meaning of life?","question2":"hello?"}\nFinished message.`
+		expectedMap := map[string]string{
+			"question1": "What is the meaning of life?",
+			"question2": "hello?",
+		}
+
+		actualMap, err := ExtractJSON(givenMessage)
+
+		assert.NoError(t, err)
+		assert.EqualValues(t, expectedMap, actualMap)
 	})
 }

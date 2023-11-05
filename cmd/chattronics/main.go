@@ -5,6 +5,7 @@ import (
 	"new-chattronics/internal"
 	"new-chattronics/internal/config"
 	"new-chattronics/internal/gpt"
+	"new-chattronics/internal/interaction"
 	"new-chattronics/internal/logging"
 )
 
@@ -20,13 +21,14 @@ func init() {
 
 func main() {
 	flag.Parse()
-	config.CreateFolders()
+	config.CreateFolders("real_", false)
 	apiKey := config.LoadApiKeyEnvVar()
 	logging.InitializeStandardLogger()
 
-	gptModel := gpt.NewGPT(model, apiKey, float32(temperature))
+	gptModel := gpt.NewGPT(model, apiKey, float32(temperature), "engineer")
+	user := interaction.CreateHumanUser()
 
-	err := internal.RunApp(gptModel)
+	_, err := internal.RunApp(gptModel, user)
 	if err != nil {
 		logging.Fatal("Failed to run application", logging.AddField("error", err))
 		return

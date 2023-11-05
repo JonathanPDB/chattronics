@@ -11,11 +11,19 @@ G) Analog to Digital transformation
 H) Digital processing
 I) Other
 
-Provide the relationship in the exact following format, where the BLOCK placeholder should be replaced with the name of the block and the CATEGORY placeholder should be replaced with the letter of the category of that block.
+Provide the relationship in the exact following format, where the BLOCK placeholder should be replaced with the name
+of the block and the CATEGORY placeholder should be replaced with the letter of the category of that block.
 
 ```Categories
 BLOCK1=CATEGORY1
 BLOCK2=CATEGORY2
 BLOCK3=CATEGORY3
 ETC
+```
+
+Example:
+```Categories
+Sensor=A
+Low Pass Filter=D
+Multimeter=F
 ```

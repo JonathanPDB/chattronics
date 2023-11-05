@@ -1,6 +1,8 @@
 package interaction
 
 import (
+	"encoding/json"
+	"fmt"
 	"new-chattronics/internal/logging"
 	"reflect"
 	"strings"
@@ -12,7 +14,7 @@ type MarkdownBlock struct {
 	Block    string   `json:"block"`
 }
 
-func extractMarkdownBlocks(message string) []MarkdownBlock {
+func extractAllMarkdownBlocks(message string) []MarkdownBlock {
 	var codeBlocks []MarkdownBlock
 
 	splitMessages := strings.Split(message, "```")
@@ -31,8 +33,8 @@ func extractMarkdownBlocks(message string) []MarkdownBlock {
 	return codeBlocks
 }
 
-func ExtractSingleBlock(message, language string) MarkdownBlock {
-	blocks := extractMarkdownBlocks(message)
+func ExtractMarkdown(message, language string) MarkdownBlock {
+	blocks := extractAllMarkdownBlocks(message)
 	var desiredBlock MarkdownBlock
 	for _, block := range blocks {
 		if strings.ToLower(block.Language) == strings.ToLower(language) {
@@ -45,4 +47,48 @@ func ExtractSingleBlock(message, language string) MarkdownBlock {
 		}
 	}
 	return desiredBlock
+}
+
+func ExtractJSON(message string) (map[string]string, error) {
+	_, trimmedMessage, found := strings.Cut(message, "{")
+	if !found {
+		return nil, fmt.Errorf("did not find the character { inside the message")
+	}
+
+	trimmedMessage, _, found = strings.Cut(trimmedMessage, "}")
+	if !found {
+		return nil, fmt.Errorf("did not find the character } inside the message")
+	}
+
+	trimmedMessage = "{" + trimmedMessage + "}"
+
+	var extractedJson map[string]string
+	err := json.Unmarshal([]byte(trimmedMessage), &extractedJson)
+	if err != nil {
+		return nil, fmt.Errorf("failed to unmarshal trimmed message: %w", err)
+	}
+
+	return extractedJson, nil
+}
+
+func ExtractJsonSlice(message string) (map[string][]string, error) {
+	_, trimmedMessage, found := strings.Cut(message, "{")
+	if !found {
+		return nil, fmt.Errorf("did not find the character { inside the message")
+	}
+
+	trimmedMessage, _, found = strings.Cut(trimmedMessage, "}")
+	if !found {
+		return nil, fmt.Errorf("did not find the character } inside the message")
+	}
+
+	trimmedMessage = "{" + trimmedMessage + "}"
+
+	var extractedJson map[string][]string
+	err := json.Unmarshal([]byte(trimmedMessage), &extractedJson)
+	if err != nil {
+		return nil, fmt.Errorf("failed to unmarshal trimmed message: %w", err)
+	}
+
+	return extractedJson, nil
 }

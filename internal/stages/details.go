@@ -8,38 +8,41 @@ import (
 	"strings"
 )
 
-func GetDetails(m *gpt.GPT, msgs gpt.Messages, categories map[string]string) (gpt.Messages, error) {
+func GetDetails(m *gpt.GPT, i interaction.User, baseMsgs gpt.Messages, categories map[string]string) (gpt.Messages, error) {
+	concatenatedMessages := baseMsgs
 
 	for name, category := range categories {
-		msgs = gpt.ReplaceSystemPrompt(msgs, prompts.DetailsQuestionsSystem)
+		detailsMsgs := gpt.ReplaceSystemPrompt(baseMsgs, prompts.DetailsQuestionsSystem)
 
-		msgs = gpt.AddUserMessage(msgs, prompts.GetDetailsQuestionPrompt(category))
-		response, err := m.SendChat(msgs)
+		detailsMsgs = gpt.AddUserMessage(detailsMsgs, buildDetailsPrompt(name, category))
+		response, err := m.SendChat(detailsMsgs)
 		if err != nil {
 			return nil, fmt.Errorf("failed to send request for detail questions: %w", err)
 		}
-		msgs = gpt.AddAssistantMessage(msgs, response)
+		detailsMsgs = gpt.AddAssistantMessage(detailsMsgs, response)
 
-		questions := interaction.ExtractSingleBlock(response, "Questions").Lines
+		jsonResponse, err := interaction.ExtractJsonSlice(response)
+		questions := jsonResponse["questions"]
 		appMessage := fmt.Sprintf("GPT wants to ask some questions to get the details and requiremntes of the %s block. "+
 			"Please answer one by one.\n\n", name)
 		interaction.PrintAppMessage(appMessage)
-		answers := interaction.AskQuestions(questions)
+		answers := i.AskQuestions(questions)
 
 		interaction.PrintAppMessage("Are there any additional comments you would like to add? If not, answer \"no\".\n")
-		additionComment := interaction.ReadConsole()
+		additionComment := i.ReadConsole()
 		if strings.ToLower(additionComment) != "no" {
 			answers = strings.Join([]string{answers, "Additional Comment: " + additionComment}, "\n")
 		}
 
-		msgs = gpt.ReplaceSystemPrompt(msgs, prompts.GetDetailsSystemPrompt(category))
-		msgs, err = detailsSatisfactionLoop(m, msgs, answers)
+		detailsMsgs = gpt.ReplaceSystemPrompt(detailsMsgs, prompts.GetDetailsSystemPrompt(category))
+		detailsMsgs, err = detailsSatisfactionLoop(m, i, detailsMsgs, answers)
+		concatenatedMessages = append(concatenatedMessages, detailsMsgs[3:]...)
 	}
 
-	return msgs, nil
+	return concatenatedMessages, nil
 }
 
-func detailsSatisfactionLoop(m *gpt.GPT, originalMsgs gpt.Messages, userInput string) (gpt.Messages, error) {
+func detailsSatisfactionLoop(m *gpt.GPT, i interaction.User, originalMsgs gpt.Messages, userInput string) (gpt.Messages, error) {
 	var compiledUserInputs []string
 	var response string
 	var err error
@@ -56,17 +59,17 @@ func detailsSatisfactionLoop(m *gpt.GPT, originalMsgs gpt.Messages, userInput st
 		}
 		msgs = gpt.AddAssistantMessage(msgs, response)
 
-		details := interaction.ExtractSingleBlock(response, "details").Block
+		details := interaction.ExtractMarkdown(response, "details").Block
 		interaction.PrintGPTMessage(details)
 
-		isSatisfied := interaction.IsUserSatisfied()
+		isSatisfied := i.IsUserSatisfied()
 		if isSatisfied {
 			break
 		}
 
 		interaction.PrintAppMessage("Please provide some feedback for the model, so it can improve on the block details.\n")
 		interaction.PrintAuxMessage("Feedback: ")
-		userInput = prompts.DetailsFeedback + interaction.ReadConsole()
+		userInput = prompts.DetailsFeedback + i.ReadConsole()
 	}
 
 	originalMsgs = gpt.AddUserMessage(originalMsgs, strings.Join(compiledUserInputs, "\n"))
@@ -74,4 +77,10 @@ func detailsSatisfactionLoop(m *gpt.GPT, originalMsgs gpt.Messages, userInput st
 	originalMsgs = gpt.AddUserMessage(originalMsgs, "Thank you. That is satisfactory.")
 
 	return originalMsgs, nil
+}
+
+func buildDetailsPrompt(name, category string) string {
+	prompt := "Ask questions regarding the block you called: " + name
+	//prompt += prompts.GetDetailsQuestionPrompt(category)
+	return prompt
 }

@@ -11,23 +11,23 @@ import (
 
 const summaryFileName = "summary.txt"
 
-func GenerateSummary(m *gpt.GPT, msgs gpt.Messages) error {
+func GenerateSummary(m *gpt.GPT, msgs gpt.Messages) (string, error) {
 	interaction.PrintAppMessage("Thank you for using the app! Generating Summary.\n")
 
 	msgs = gpt.AddUserMessage(msgs, prompts.Summary)
 	response, err := m.SendChat(msgs)
 	if err != nil {
-		return fmt.Errorf("failed to send summarize message")
+		return "", fmt.Errorf("failed to send summarize message")
 	}
-	summary := interaction.ExtractSingleBlock(response, "summary").Block
+	summary := interaction.ExtractMarkdown(response, "summary").Block
 
 	interaction.PrintAuxMessage(summary)
 
 	file := config.RunFolderPath + summaryFileName
 	err = os.WriteFile(file, []byte(summary), 0666)
 	if err != nil {
-		return fmt.Errorf("error writing summary to file: %w", err)
+		return "", fmt.Errorf("error writing summary to file: %w", err)
 	}
 
-	return nil
+	return summary, err
 }

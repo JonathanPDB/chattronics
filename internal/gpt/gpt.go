@@ -19,13 +19,13 @@ type GPT struct {
 	logger      *logging.ChatLogger
 }
 
-func NewGPT(model, apikey string, temperature float32) *GPT {
+func NewGPT(model, apikey string, temperature float32, persona string) *GPT {
 	return &GPT{
 		model:       model,
 		client:      openai.NewClient(apikey),
 		temperature: temperature,
 		totalCost:   0,
-		logger:      logging.NewChatLogger("engineer"),
+		logger:      logging.NewChatLogger(persona),
 	}
 }
 

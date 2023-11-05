@@ -13,7 +13,7 @@ const baseRunsPath = "/Users/I564244/Personal/TCC/new-chattronics/runs/"
 var RunFolderPath string
 var LogFolderPath string
 
-func CreateFolders() {
+func CreateFolders(customFolderPrefix string, omitTimestamp bool) string {
 	if _, err := os.Stat(baseRunsPath); os.IsNotExist(err) {
 		err = os.Mkdir(baseRunsPath, os.ModePerm)
 		if err != nil {
@@ -21,8 +21,14 @@ func CreateFolders() {
 		}
 	}
 
-	date := time.Now().Format("Jan02_15-04-05")
-	RunFolderPath = baseRunsPath + date
+	RunFolderPath = baseRunsPath
+
+	folderName := customFolderPrefix
+	if !omitTimestamp {
+		folderName += time.Now().Format("Jan02_15-04-05")
+	}
+
+	RunFolderPath += folderName
 
 	if strings.HasSuffix(os.Args[0], ".test") {
 		RunFolderPath += "_TEST"
@@ -41,6 +47,8 @@ func CreateFolders() {
 	if err != nil {
 		log.Fatalf("Error to create lgos folder: %s", err.Error())
 	}
+
+	return folderName
 }
 
 func LoadApiKeyEnvVar() string {

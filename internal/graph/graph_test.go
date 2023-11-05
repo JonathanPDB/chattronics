@@ -27,9 +27,10 @@ func getMockGraphvizDiagram() string {
 
 func TestRenderGraph(t *testing.T) {
 	t.Run("Successfully render graphviz diagram", func(t *testing.T) {
-		config.CreateFolders(false)
-		err := RenderGraph(getMockGraphvizDiagram())
+		config.CreateFolders("", false)
+		err := RenderGraph(getMockGraphvizDiagram(), "diagram")
 		assert.NoError(t, err)
 		assert.FileExists(t, config.RunFolderPath+"diagram.svg")
+		assert.FileExists(t, config.RunFolderPath+"diagram.png")
 	})
 }

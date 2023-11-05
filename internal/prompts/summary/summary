@@ -1,13 +1,12 @@
-Now provide a short summary of the whole solution provided by you throughout
-the whole conversation. Provide a minimum of 20 words and a maximum of 100.
-Also, provide a title for this project.
-Your answer must be in exactly the following template, where all caps words
-are placeholders:
+Now provide a short summary of the whole solution provided by you throughout the whole conversation.
+Do not write excessively, but make sure all details and requirements are clearly stated.
+Start with a title.
+
+Your answer must be in exactly the following template, where all caps words are placeholders that you must fill in:
 
 ```Summary
-SUMMARY HERE
-```
-
-```Title
 TITLE HERE
+
+
+SUMMARY HERE
 ```

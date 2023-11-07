@@ -3,7 +3,7 @@ package interaction
 import (
 	"encoding/json"
 	"fmt"
-	"new-chattronics/internal/logging"
+	"github.com/chattronics/chattronics/internal/logging"
 	"reflect"
 	"strings"
 )

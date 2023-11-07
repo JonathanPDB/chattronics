@@ -1,10 +1,10 @@
 package logging
 
 import (
+	"github.com/chattronics/chattronics/internal/config"
 	"go.uber.org/zap"
 	"go.uber.org/zap/zapcore"
 	"log"
-	"new-chattronics/internal/config"
 	"os"
 	"time"
 )

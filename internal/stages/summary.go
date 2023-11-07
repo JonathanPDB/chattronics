@@ -2,10 +2,10 @@ package stages
 
 import (
 	"fmt"
-	"new-chattronics/internal/config"
-	"new-chattronics/internal/gpt"
-	"new-chattronics/internal/interaction"
-	"new-chattronics/internal/prompts"
+	"github.com/chattronics/chattronics/internal/config"
+	"github.com/chattronics/chattronics/internal/gpt"
+	"github.com/chattronics/chattronics/internal/interaction"
+	"github.com/chattronics/chattronics/internal/prompts"
 	"os"
 )
 

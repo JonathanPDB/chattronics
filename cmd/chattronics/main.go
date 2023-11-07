@@ -2,11 +2,11 @@ package main
 
 import (
 	"flag"
-	"new-chattronics/internal"
-	"new-chattronics/internal/config"
-	"new-chattronics/internal/gpt"
-	"new-chattronics/internal/interaction"
-	"new-chattronics/internal/logging"
+	"github.com/chattronics/chattronics/internal"
+	"github.com/chattronics/chattronics/internal/config"
+	"github.com/chattronics/chattronics/internal/gpt"
+	"github.com/chattronics/chattronics/internal/interaction"
+	"github.com/chattronics/chattronics/internal/logging"
 )
 
 var (

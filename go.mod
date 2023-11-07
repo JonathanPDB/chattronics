@@ -1,4 +1,4 @@
-module new-chattronics
+module github.com/chattronics/chattronics
 
 go 1.20
 

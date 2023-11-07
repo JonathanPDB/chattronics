@@ -3,9 +3,9 @@ package graph
 import (
 	"bytes"
 	"fmt"
+	"github.com/chattronics/chattronics/internal/config"
+	"github.com/chattronics/chattronics/internal/logging"
 	"github.com/goccy/go-graphviz"
-	"new-chattronics/internal/config"
-	"new-chattronics/internal/logging"
 	"os/exec"
 )
 

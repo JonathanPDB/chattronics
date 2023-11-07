@@ -1,8 +1,8 @@
 package gpt
 
 import (
+	"github.com/chattronics/chattronics/internal/logging"
 	"github.com/sashabaranov/go-openai"
-	"new-chattronics/internal/logging"
 )
 
 func AddUserMessage(msgs Messages, new string) Messages {

@@ -2,10 +2,10 @@ package interaction
 
 import (
 	"fmt"
+	"github.com/chattronics/chattronics/internal/config"
+	"github.com/chattronics/chattronics/internal/logging"
+	"github.com/chattronics/chattronics/tests/cases"
 	"github.com/stretchr/testify/assert"
-	"new-chattronics/internal/config"
-	"new-chattronics/internal/logging"
-	"new-chattronics/tests/cases"
 	"slices"
 	"strings"
 	"testing"
@@ -34,7 +34,7 @@ func TestGPTUser_AskQuestions(t *testing.T) {
 	apiKey := config.LoadApiKeyEnvVar()
 	logging.InitializeStandardLogger()
 
-	iterations := 3
+	iterations := 20
 
 	baseSysPrompt := cases.BaseInformative
 

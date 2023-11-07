@@ -1,8 +1,8 @@
 package graph
 
 import (
+	"github.com/chattronics/chattronics/internal/config"
 	"github.com/stretchr/testify/assert"
-	"new-chattronics/internal/config"
 	"testing"
 )
 

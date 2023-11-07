@@ -2,9 +2,9 @@ package evaluate
 
 import (
 	"fmt"
-	"new-chattronics/internal/gpt"
-	"new-chattronics/internal/interaction"
-	"new-chattronics/tests/cases"
+	"github.com/chattronics/chattronics/internal/gpt"
+	"github.com/chattronics/chattronics/internal/interaction"
+	"github.com/chattronics/chattronics/tests/cases"
 	"strconv"
 )
 

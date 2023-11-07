@@ -2,10 +2,10 @@ package internal
 
 import (
 	"fmt"
+	"github.com/chattronics/chattronics/internal/gpt"
+	"github.com/chattronics/chattronics/internal/interaction"
+	"github.com/chattronics/chattronics/internal/stages"
 	"github.com/sashabaranov/go-openai"
-	"new-chattronics/internal/gpt"
-	"new-chattronics/internal/interaction"
-	"new-chattronics/internal/stages"
 )
 
 func RunApp(m *gpt.GPT, i interaction.User) (string, error) {

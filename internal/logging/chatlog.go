@@ -3,8 +3,8 @@ package logging
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/chattronics/chattronics/internal/config"
 	"log"
-	"new-chattronics/internal/config"
 	"os"
 )
 

@@ -2,8 +2,8 @@ package interaction
 
 import (
 	"fmt"
-	"new-chattronics/internal/gpt"
-	"new-chattronics/internal/logging"
+	"github.com/chattronics/chattronics/internal/gpt"
+	"github.com/chattronics/chattronics/internal/logging"
 	"strconv"
 	"strings"
 )

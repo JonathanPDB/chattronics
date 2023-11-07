@@ -3,8 +3,8 @@ package gpt
 import (
 	"context"
 	"fmt"
+	"github.com/chattronics/chattronics/internal/logging"
 	"github.com/sashabaranov/go-openai"
-	"new-chattronics/internal/logging"
 	"strings"
 )
 

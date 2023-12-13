@@ -1,7 +1,0 @@
-1. The NTC is linearized
-2. Linearization is using a resistor in parallel with the sensor.
-3. The sensor is placed in a wheatstone bridge.
-4. The signal is amplified before measurement.
-5. The voltage range of the output is provided, as well as the needed gain.
-6. The self-heating effect of the thermistor is taking into account and mitigated.
-7. The measurement is made with a multimeter and there is no digital part.

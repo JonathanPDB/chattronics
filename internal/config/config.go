@@ -8,7 +8,7 @@ import (
 	"time"
 )
 
-const baseRunsPath = "/Users/I564244/Personal/TCC/new-chattronics/runs/"
+const baseRunsPath = "/Users/I564244/TCC/new-chattronics/runs/"
 
 var RunFolderPath string
 var LogFolderPath string

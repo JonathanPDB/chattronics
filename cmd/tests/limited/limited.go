@@ -7,8 +7,8 @@ import (
 	"github.com/chattronics/chattronics/internal/gpt"
 	"github.com/chattronics/chattronics/internal/interaction"
 	"github.com/chattronics/chattronics/internal/logging"
-	"github.com/chattronics/chattronics/tests/cases"
-	"github.com/chattronics/chattronics/tests/evaluate"
+	"github.com/chattronics/chattronics/testbenches/cases"
+	"github.com/chattronics/chattronics/testbenches/evaluate"
 	"strconv"
 )
 

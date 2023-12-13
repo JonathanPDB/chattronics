@@ -1,0 +1,3 @@
+I want to develop a project that calculates the angle of a pendulum by using a potentiometer.
+The component will be fixed to a wooden structure and another beam will be connected to the adjustable pin.
+The output must be viewed using LabVIEW and, therefore, will be measured using a DAQ.

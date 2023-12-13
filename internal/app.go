@@ -5,11 +5,10 @@ import (
 	"github.com/chattronics/chattronics/internal/gpt"
 	"github.com/chattronics/chattronics/internal/interaction"
 	"github.com/chattronics/chattronics/internal/stages"
-	"github.com/sashabaranov/go-openai"
 )
 
 func RunApp(m *gpt.GPT, i interaction.User) (string, error) {
-	msgs := make([]openai.ChatCompletionMessage, 0)
+	msgs := make(gpt.Messages, 0)
 	var err error
 
 	interaction.GreetingsMessage()

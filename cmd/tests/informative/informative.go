@@ -7,8 +7,8 @@ import (
 	"github.com/chattronics/chattronics/internal/gpt"
 	"github.com/chattronics/chattronics/internal/interaction"
 	"github.com/chattronics/chattronics/internal/logging"
-	"github.com/chattronics/chattronics/tests/cases"
-	"github.com/chattronics/chattronics/tests/evaluate"
+	"github.com/chattronics/chattronics/testbenches/cases"
+	"github.com/chattronics/chattronics/testbenches/evaluate"
 	"strconv"
 )
 
@@ -60,7 +60,7 @@ func main() {
 	scoresSum := 0
 
 	for i := 0; i < iterations; i++ {
-		config.CreateFolders(folderName+"/"+strconv.Itoa(i), true) // TODO: Fix how the log folder is working
+		config.CreateFolders(folderName+"/"+strconv.Itoa(i), true) //TODO: Fix how the log folder is working
 
 		gptModel := gpt.NewGPT(model, apiKey, float32(temperature), "engineer")
 

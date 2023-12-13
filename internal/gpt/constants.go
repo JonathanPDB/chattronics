@@ -13,6 +13,7 @@ const (
 const (
 	GPT3_5Turbo = openai.GPT3Dot5Turbo
 	GPT4        = openai.GPT4
+	GPT4Turbo   = openai.GPT4TurboPreview
 
 	GPT4Prefix   = "gpt-4"
 	GPT3_5Prefix = "gpt-3.5"

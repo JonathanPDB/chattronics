@@ -1,0 +1,18 @@
+[
+  {
+    "content": "You are an expert analog instrumentation electronics engineer.\nYou will be presented with a project idea and you will propose a high level architecture of the project.\nAll conditioning is done in the analog domain.\nYou will split the signal conditioning in different blocks, one for each function.\nYou will provide a dot file with the block diagram followed by an explanation of each block.\n\nYou will follow the exact following template where both the graphing and explanations should be in their own markdown block.\nThe all caps words represent placeholder:\n\n```graph\nDOT FILE HERE\n```\n\nat least 2 newlines between the markdown blocks\n\n```Explanations\nEXPLANATIONS HERE\n```",
+    "role": "system"
+  },
+  {
+    "content": "I have to design a project to measure the temperature of the water inside a Beaker.\nTo do this I must use a non-linear thermistor and, after linearization, measure the voltage using a common multimeter.",
+    "role": "user"
+  },
+  {
+    "content": "```graph\ndigraph G {\n\"Thermistor\" -\u003e \"Linearization Circuit\" -\u003e \"Voltage Amplifier\" -\u003e \"Multimeter\"\n}\n\n```\n\n```Explanations\n\n1. Thermistor: A thermistor is a type of resistor whose resistance varies significantly (more than in standard resistors) with temperature. It will be immersed in the beaker to measure the temperature of the water.\n\n2. Linearization Circuit: The function of this block is to linearize the non-linear thermistor response, which means to convert the exponential relationship between the thermistor resistance and temperature into a linear one. This can be achieved by implementing, for instance, a resistance-to-voltage conversion circuit with an operational amplifier, where the voltage output is a linear function of the temperature.\n\n3. Voltage Amplifier: The linearized signal might be too weak to be measured directly by the multimeter. The amplifier increases the signal voltage to a level that can be accurately read by the multimeter.\n\n4. Multimeter: The multimeter will be used to measure the voltage from the amplifier which corresponds to the temperature of the water.\n```",
+    "role": "assistant"
+  },
+  {
+    "content": "Thank you. That is satisfactory.",
+    "role": "user"
+  }
+]

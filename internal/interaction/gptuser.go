@@ -9,7 +9,7 @@ import (
 )
 
 const (
-	gptUserModel       = gpt.GPT4
+	gptUserModel       = gpt.GPT4Turbo
 	gptUserTemperature = 0.2
 )
 

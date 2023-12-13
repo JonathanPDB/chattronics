@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"github.com/chattronics/chattronics/internal/gpt"
 	"github.com/chattronics/chattronics/internal/interaction"
-	"github.com/chattronics/chattronics/tests/cases"
+	"github.com/chattronics/chattronics/testbenches/cases"
 	"strconv"
 )
 
@@ -13,7 +13,7 @@ func Evaluate(summary, requirements, apiKey string) (int, string, string, error)
 	evaluatorMsgs := gpt.ReplaceSystemPrompt(gpt.Messages{}, evaluatorSystemPrompt)
 	evaluatorMsgs = gpt.AddUserMessage(evaluatorMsgs, summary)
 
-	gptModel := gpt.NewGPT(gpt.GPT4, apiKey, 0.2, "evaluator")
+	gptModel := gpt.NewGPT(gpt.GPT4Turbo, apiKey, 0.2, "evaluator")
 
 	response, err := gptModel.SendChat(evaluatorMsgs)
 	if err != nil {

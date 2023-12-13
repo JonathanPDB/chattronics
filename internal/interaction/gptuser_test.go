@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"github.com/chattronics/chattronics/internal/config"
 	"github.com/chattronics/chattronics/internal/logging"
-	"github.com/chattronics/chattronics/tests/cases"
+	"github.com/chattronics/chattronics/testbenches/cases"
 	"github.com/stretchr/testify/assert"
 	"slices"
 	"strings"

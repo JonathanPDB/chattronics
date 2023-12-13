@@ -1,0 +1,8 @@
+1. The output should be measured by a multimeter
+2. There should be amplification stage and the gain must be provided and justified
+3. The NTC is linearized by a resistor optimized for the midrange 50 ºC .
+4. The NTC is linearized by a resistor and the value is provided and justified.
+5. The architecture should be roughly consisting of the sensor, a linearization stage, amplification, optional filtering and measurement. Or some variation not too far off of this.
+6. The sensor used is an NTC
+7. The output voltage range to be measured by the multimeter is between 0 and 20 Volts
+8. The self heating effect is taken into account and there is something in the solution that controls it.

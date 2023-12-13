@@ -14,6 +14,11 @@ var (
 	temperature float64
 )
 
+//TODO: Fix env var issue (cant load from other places)
+//TODO: Fix unit tests
+//TODO: Remove your directory from config
+//TODO: Cant laod cases from other locations
+
 func init() {
 	flag.StringVar(&model, "model", "gpt-3.5-turbo", "GPT model version")
 	flag.Float64Var(&temperature, "temperature", 0.8, "GPT temperature. Higher values, higher variability")

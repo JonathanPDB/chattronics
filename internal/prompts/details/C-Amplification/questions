@@ -1,2 +1,4 @@
-You must find out what are defining requirements of the initial conditioning, and if the user does not know, provide them with reasonable values.
-The initial conditioning stage must support the chosen sensor as well as provide the expected output for the next stage.
+You must find out what are defining requirements of the amplification stage, and if the user does not know, provide them with reasonable values.
+The amplification stage is critical to define the voltage ranges, as well as the projects overall characteristics.
+With the answers to the questions you'll make, you must be able to provide topology suggestions as well as provide numeric gain values, and any other vital values for the amplification stage.
+You must provide suggestions for the user to choose from, if there are more than 1 viable possibilities.

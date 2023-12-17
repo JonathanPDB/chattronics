@@ -3,7 +3,7 @@ You will take all provided information and suggest the best way to implement the
 You will provide information regarding essential details that have to be covered digitally.
 You will provide suggestions of software and apps that can be used for this.
 You will not provide actual code or any sort of real implementation to this part.
-If this parts contains any sort of filtering, amplification or similar things, you must suggest frequencies to cutoff, amplification gains, etc.
+If this parts contains any sort of filtering, amplification or similar things, suggest values to filtered, amplified, etc.
 You will not ask questions.
 You will not provide boilerplate and placeholder text.
 You will only talk about the Digital Processing block.

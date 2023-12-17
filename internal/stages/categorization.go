@@ -13,7 +13,7 @@ const categorySeparator = "="
 
 var Categories = []string{
 	"A", // Sensor
-	"B", // Initial Conditioning
+	"B", // Signal Conditioning
 	"C", // Amplification
 	"D", // Filtering
 	"E", // Other Conditioning

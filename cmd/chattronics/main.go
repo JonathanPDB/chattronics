@@ -18,6 +18,7 @@ var (
 //TODO: Fix unit tests
 //TODO: Remove your directory from config
 //TODO: Cant laod cases from other locations
+//TODO: Improve logs in testing mode
 
 func init() {
 	flag.StringVar(&model, "model", "gpt-3.5-turbo", "GPT model version")

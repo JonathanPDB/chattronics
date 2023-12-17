@@ -81,6 +81,6 @@ func detailsSatisfactionLoop(m *gpt.GPT, i interaction.User, originalMsgs gpt.Me
 
 func buildDetailsPrompt(name, category string) string {
 	prompt := "Ask questions regarding the block you called: " + name
-	//prompt += prompts.GetDetailsQuestionPrompt(category)
+	prompt += prompts.GetDetailsQuestionPrompt(category)
 	return prompt
 }

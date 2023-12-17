@@ -2,6 +2,7 @@ package main
 
 import (
 	"flag"
+	"fmt"
 	"github.com/chattronics/chattronics/internal"
 	"github.com/chattronics/chattronics/internal/config"
 	"github.com/chattronics/chattronics/internal/gpt"
@@ -87,6 +88,8 @@ func main() {
 		logging.Info("Explanations.",
 			logging.AddField("explanations", explanations),
 		)
+		interaction.PrintAppMessage(fmt.Sprintf("\n\nScore: %d\tVerdict: %s\n", score, verdict))
+		interaction.PrintAppMessage(explanations)
 	}
 
 	logging.Info("Final results.",

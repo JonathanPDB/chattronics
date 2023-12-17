@@ -2,12 +2,12 @@ With the diagram block proposed, classify each block in one of the following
 categories:
 
 A) Sensor
-B) Initial conditioning
+B) Signal conditioning
 C) Amplification
 D) Filtering
 E) Other conditioning
-F) Analog measurement
-G) Analog to Digital transformation
+F) Direct measurement
+G) ADC
 H) Digital processing
 I) Other
 

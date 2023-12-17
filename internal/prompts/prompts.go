@@ -29,10 +29,10 @@ var detailsQuestions_A string
 //go:embed details/A-Sensor/details-sys
 var detailsSystem_A string
 
-//go:embed details/B-Initial_conditioning/questions
+//go:embed details/B-Signal_conditioning/questions
 var detailsQuestions_B string
 
-//go:embed details/B-Initial_conditioning/details-sys
+//go:embed details/B-Signal_conditioning/details-sys
 var detailsSystem_B string
 
 //go:embed details/C-Amplification/questions
@@ -53,10 +53,10 @@ var detailsQuestions_E string
 //go:embed details/E-Other_conditioning/details-sys
 var detailsSystem_E string
 
-//go:embed details/F-Analog_measurement/questions
+//go:embed details/F-Direct_measurement/questions
 var detailsQuestions_F string
 
-//go:embed details/F-Analog_measurement/details-sys
+//go:embed details/F-Direct_measurement/details-sys
 var detailsSystem_F string
 
 //go:embed details/G-ADC/questions

@@ -55,10 +55,17 @@ func (gpt *GPT) SendChat(messages Messages) (string, error) {
 	return resp.Choices[0].Message.Content, nil
 }
 
+func (gpt *GPT) ChangeModel(model string) {
+	gpt.model = model
+}
+
 func (gpt *GPT) calculateCost(inputTokens, outputTokens int) float64 {
 	var inputCost, outputCost float64
 
-	if strings.HasPrefix(gpt.model, GPT4Prefix) {
+	if strings.HasPrefix(gpt.model, GPT4TurboPrefix) {
+		inputCost = (float64(inputTokens) * GPT4TurboCostInput) / 1000
+		outputCost = (float64(outputTokens) * GPT4TurboCostOutput) / 1000
+	} else if strings.HasPrefix(gpt.model, GPT4Prefix) {
 		inputCost = (float64(inputTokens) * GPT4CostInput) / 1000
 		outputCost = (float64(outputTokens) * GPT4CostOutput) / 1000
 	} else if strings.HasPrefix(gpt.model, GPT3_5Prefix) {

@@ -23,6 +23,9 @@ var DetailsFeedback string
 //go:embed summary/summary
 var Summary string
 
+//go:embed summary/review
+var Review string
+
 //go:embed details/A-Sensor/questions
 var detailsQuestions_A string
 

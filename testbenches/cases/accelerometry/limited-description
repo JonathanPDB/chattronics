@@ -1,0 +1,8 @@
+Design a portable device capable of measuring low-frequency vibration.
+Use a piezoelectric accelerometer
+The accelerometer has a sensitivity of 100 pC/g
+An input oscillation has a frequency of 2Hz
+The input oscillation has an amplification of 5cm.
+Output voltage should be 1 V peak to peak
+Low frequency response is 3 dB down at 0.25 Hz
+The offset should be kept as less than 10mv

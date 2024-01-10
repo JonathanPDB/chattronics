@@ -1,0 +1,12 @@
+1. Both sensors have d.c. output, so no demodulation should be used.
+2. An ADC should be used
+3. Radiation sensors are being linearized
+4. Radiation sensors are being linearized either digitally in the computer or by using diode networks or log amplifiers.
+5. The solution mentions the sampling order strategy, if it'll be sequential, simultaneously, etc
+6. The sampling frequency is not less than 1000 Hz
+7. The sampling frequency is higher than 2000 Hz
+8. The solution implements a low pass filters
+9. The low pass cutoff frequency is higher than 400 Hz and lower than half the sampling frequency.
+10. Anti-aliasing is placed before multiplexers
+11. The project uses multiplexers to choose channels
+12. The multiplexers are solid state

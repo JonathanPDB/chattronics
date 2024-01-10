@@ -7,27 +7,61 @@ import (
 	"github.com/chattronics/chattronics/internal/interaction"
 	"github.com/chattronics/chattronics/internal/prompts"
 	"os"
+	"strings"
 )
 
-const summaryFileName = "summary.txt"
+const summaryFileName = "summary.md"
+const compilationFileName = "compilation.md"
 
-func GenerateSummary(m *gpt.GPT, msgs gpt.Messages) (string, error) {
-	interaction.PrintAppMessage("Thank you for using the app! Generating Summary.\n")
+func GenerateSummary(m *gpt.GPT, msgs gpt.Messages) (string, []string, error) {
+	interaction.PrintAppMessage("\nThank you for using the app! Generating Summary.\n\n\n")
 
-	msgs = gpt.AddUserMessage(msgs, prompts.Summary)
+	msgs = gpt.ReplaceSystemPrompt(msgs, prompts.Review)
 	response, err := m.SendChat(msgs)
 	if err != nil {
-		return "", fmt.Errorf("failed to send summarize message")
+		return "", nil, fmt.Errorf("failed to send summarize message")
+	}
+	review := interaction.ExtractMarkdown(response, "review").Block
+	interaction.PrintAppMessage("GPT has made some corrections to his implementation after review it as a whole:\n")
+	interaction.PrintGPTMessage(review)
+
+	summaryMsgs := gpt.AddUserMessage(msgs, prompts.Summary)
+	response, err = m.SendChat(summaryMsgs)
+	if err != nil {
+		return "", nil, fmt.Errorf("failed to send summarize message")
 	}
 	summary := interaction.ExtractMarkdown(response, "summary").Block
-
-	interaction.PrintAuxMessage(summary)
 
 	file := config.RunFolderPath + summaryFileName
 	err = os.WriteFile(file, []byte(summary), 0666)
 	if err != nil {
-		return "", fmt.Errorf("error writing summary to file: %w", err)
+		return "", nil, fmt.Errorf("error writing summary to file: %w", err)
 	}
 
-	return summary, err
+	interaction.PrintGPTMessage("SUMMARY\n\n" + summary)
+
+	compilation, listedSolution := compileAssistantMessages(msgs)
+	file = config.RunFolderPath + compilationFileName
+	err = os.WriteFile(file, []byte(compilation), 0666)
+	if err != nil {
+		return "", nil, fmt.Errorf("error writing compilation to file: %w", err)
+	}
+
+	return compilation, listedSolution, err
+}
+
+func compileAssistantMessages(msgs gpt.Messages) (string, []string) {
+	var compiledSolution string
+	var listedSolution []string
+	for _, message := range msgs {
+		if message.Role != gpt.AssistantRole {
+			continue
+		}
+		if !strings.Contains(message.Content, "```") {
+			continue
+		}
+		compiledSolution += message.Content + "\n"
+		listedSolution = append(listedSolution, message.Content+"\n")
+	}
+	return compiledSolution, listedSolution
 }

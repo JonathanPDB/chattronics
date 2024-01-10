@@ -1,36 +1,36 @@
 PROJECT=chattronics
-model=gpt-3.5-turbo
+model=gpt-4-turbo
 temperature=0.2
 iterations=1
 testCase=themometry
 
 .PHONY: build
 build:
+	@make clean
 	@go build -o $(PROJECT) ./cmd/chattronics/main.go
 
 run:
 	clear
 	@./$(PROJECT) -model=$(model) -temperature=$(temperature)
-	@make clean
 
 
 .PHONY: build-limited
 build-limited:
+	@make clean
 	@go build -o $(PROJECT)-limited ./cmd/tests/limited/limited.go
 
 run-limited:
 	clear
 	@./$(PROJECT)-limited -model=$(model) -temperature=$(temperature) -iterations=$(iterations) -testCase=$(testCase)
-	@make clean
 
 .PHONY: build-informative
 build-informative:
+	@make clean
 	@go build -o $(PROJECT)-informative ./cmd/tests/informative/informative.go
 
 run-informative:
 	clear
 	@./$(PROJECT)-informative -model=$(model) -temperature=$(temperature) -iterations=$(iterations) -testCase=$(testCase)
-	@make clean
 
 unit-test:
 	go test ./pkg/*** -cover

@@ -57,20 +57,30 @@ func main() {
 		"INVALID":    0,
 	}
 
-	scoresSum := 0
+	//scoresSum := 0
 
 	for i := 0; i < iterations; i++ {
 		config.CreateFolders(folderName+"/"+strconv.Itoa(i), true)
 
 		gptModel := gpt.NewGPT(model, apiKey, float32(temperature), "engineer")
 
-		summary, err := internal.RunApp(gptModel, user)
+		compilation, listedSolution, err := internal.RunApp(gptModel, user)
 		if err != nil {
 			logging.Fatal("Failed to run application", logging.AddField("error", err))
 			return
 		}
 
-		score, verdict, explanations, err := evaluate.Evaluate(summary, requirements, apiKey)
+		verdict, err := evaluate.GiveVerdict(compilation, requirements, apiKey)
+		if err != nil {
+			logging.Fatal("Failed to get verdict", logging.AddField("error", err))
+			return
+		}
+
+		err = evaluate.GiveScores(listedSolution, requirements, apiKey)
+		if err != nil {
+			logging.Fatal("Failed to get scores", logging.AddField("error", err))
+			return
+		}
 
 		if _, ok := verdicts[verdict]; ok {
 			verdicts[verdict]++
@@ -78,19 +88,16 @@ func main() {
 			verdicts["INVALID"]++
 		}
 
-		scoresSum += score
+		//scoresSum += score
 
 		logging.Info("Finished iteration.",
-			logging.AddField("score", score),
+			//logging.AddField("score", score),
 			logging.AddField("verdict", verdict),
-		)
-		logging.Info("Explanations.",
-			logging.AddField("explanations", explanations),
 		)
 	}
 
 	logging.Info("Final results.",
-		logging.AddField("score_average", scoresSum/iterations),
+		//logging.AddField("score_average", scoresSum/iterations),
 		logging.AddField("verdicts", verdicts),
 	)
 }

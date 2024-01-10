@@ -1,0 +1,11 @@
+Design a system to monitor pressure and surface tempera-ture variations at eight points in a machine and the data is to be analysed by computer.
+The accuracy should be at least of 1%
+The pressure sensors have a maximum output of 1 mV
+Temperature sensors are radiation detectors having a maximum output of 100 m V
+Temperature sensors have a nonlinear scale
+Strain-gauge should be used as the pressure sensor
+Infrared radiation detectors should be used for the surface temperature sensor.
+Assume all pressure sensors have identical sensitivity
+Signal frequencies of 400 Hz are expected
+Frequencies higher than 400 Hz (if present) need not be recorded.
+The ADC should be a SAR

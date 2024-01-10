@@ -6,10 +6,6 @@ import (
 )
 
 func AddUserMessage(msgs Messages, new string) Messages {
-	//if msgs[len(msgs)-1].Role == UserRole {
-	//	logging.Warn("adding back-to-back user prompts")
-	//}
-
 	msgs = append(msgs, openai.ChatCompletionMessage{
 		Role:    UserRole,
 		Content: new,
@@ -19,10 +15,6 @@ func AddUserMessage(msgs Messages, new string) Messages {
 }
 
 func AddAssistantMessage(msgs Messages, new string) Messages {
-	//if msgs[len(msgs)-1].Role == AssistantRole {
-	//	logging.Warn("adding back-to-back assistant prompts")
-	//}
-
 	msgs = append(msgs, openai.ChatCompletionMessage{
 		Role:    AssistantRole,
 		Content: new,

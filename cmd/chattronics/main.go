@@ -34,7 +34,7 @@ func main() {
 	gptModel := gpt.NewGPT(model, apiKey, float32(temperature), "engineer")
 	user := interaction.CreateHumanUser()
 
-	_, err := internal.RunApp(gptModel, user)
+	_, _, err := internal.RunApp(gptModel, user)
 	if err != nil {
 		logging.Fatal("Failed to run application", logging.AddField("error", err))
 		return

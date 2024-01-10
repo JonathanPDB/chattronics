@@ -12,6 +12,12 @@ var BaseInformative string
 //go:embed prompts/evaluate-sys
 var BaseEvaluator string
 
+//go:embed prompts/score-sys
+var BaseScoreEvaluator string
+
+//go:embed prompts/verdict-sys
+var BaseVerdictEvaluator string
+
 // Potentiometer
 //
 //go:embed potentiometer/available-info
@@ -40,9 +46,39 @@ var limitedDescThermometry string
 //go:embed thermometry/requirements
 var requirementsThermometry string
 
+// Accelerometry
+//
+//go:embed accelerometry/available-info
+var availableInfoAccelerometry string
+
+//go:embed accelerometry/informative-description
+var informativeDescAccelerometry string
+
+//go:embed accelerometry/limited-description
+var limitedDescAccelerometry string
+
+//go:embed accelerometry/requirements
+var requirementsAccelerometry string
+
+// Machine
+//
+//go:embed machine/available-info
+var availableInfoMachine string
+
+//go:embed machine/informative-description
+var informativeDescMachine string
+
+//go:embed machine/limited-description
+var limitedDescMachine string
+
+//go:embed machine/requirements
+var requirementsMachine string
+
 const (
 	thermometry   = "thermometry"
 	potentiometer = "potentiometer"
+	accelerometry = "accelerometry"
+	machine       = "machine"
 )
 
 func GetInformative(testcase string) (string, string, error) {
@@ -53,6 +89,12 @@ func GetInformative(testcase string) (string, string, error) {
 	case potentiometer:
 		informativeSysPrompt := BaseInformative + availableInfoPotentiometer
 		return informativeDescPotentiometer, informativeSysPrompt, nil
+	case accelerometry:
+		informativeSysPrompt := BaseInformative + availableInfoAccelerometry
+		return informativeDescAccelerometry, informativeSysPrompt, nil
+	case machine:
+		informativeSysPrompt := BaseInformative + availableInfoMachine
+		return informativeDescMachine, informativeSysPrompt, nil
 	default:
 		return "", "", fmt.Errorf("did not find test case for informative prompts")
 	}
@@ -64,6 +106,10 @@ func GetLimited(testcase string) (string, error) {
 		return limitedDescThermometry, nil
 	case potentiometer:
 		return limitedDescPotentiometer, nil
+	case accelerometry:
+		return limitedDescAccelerometry, nil
+	case machine:
+		return limitedDescMachine, nil
 	default:
 		return "", fmt.Errorf("did not find test case for limited prompts")
 	}
@@ -75,6 +121,10 @@ func GetRequirements(testcase string) (string, error) {
 		return requirementsThermometry, nil
 	case potentiometer:
 		return requirementsPotentiometer, nil
+	case accelerometry:
+		return requirementsAccelerometry, nil
+	case machine:
+		return requirementsMachine, nil
 	default:
 		return "", fmt.Errorf("did not find test case for requirements")
 	}

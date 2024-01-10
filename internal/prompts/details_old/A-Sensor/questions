@@ -1,3 +1,0 @@
-You must find out what are defining requirements of the sensor, and if the user does not know, provide them with reasonable values.
-You must find out exactly what type and model of sensor will be used and provide at least one suggestion.
-You must make sure your sensor can support the project's limits of temperature, voltage, current, etc.

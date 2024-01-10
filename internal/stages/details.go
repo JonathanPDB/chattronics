@@ -36,7 +36,7 @@ func GetDetails(m *gpt.GPT, i interaction.User, baseMsgs gpt.Messages, categorie
 
 		detailsMsgs = gpt.ReplaceSystemPrompt(detailsMsgs, prompts.GetDetailsSystemPrompt(category))
 		detailsMsgs, err = detailsSatisfactionLoop(m, i, detailsMsgs, answers)
-		concatenatedMessages = append(concatenatedMessages, detailsMsgs[3:]...)
+		concatenatedMessages = append(concatenatedMessages, detailsMsgs[6:]...)
 	}
 
 	return concatenatedMessages, nil
@@ -60,7 +60,7 @@ func detailsSatisfactionLoop(m *gpt.GPT, i interaction.User, originalMsgs gpt.Me
 		msgs = gpt.AddAssistantMessage(msgs, response)
 
 		details := interaction.ExtractMarkdown(response, "details").Block
-		interaction.PrintGPTMessage(details)
+		interaction.PrintGPTMessage(details + "\n\n")
 
 		isSatisfied := i.IsUserSatisfied()
 		if isSatisfied {

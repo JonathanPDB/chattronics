@@ -3,6 +3,6 @@
 3. The input voltage range should be between -10 and 10 Volts
 4. The angle range that the potentiometer should be able to measure is from 0 to 180 degrees
 5. The structure should be able to measure at least 20 evenly spaced out angles
-6. The sampling rate of the DAQ is 1000 samples per second.
+6. The sampling rate of the DAQ is 1000 samples per second
 7. Frequencies around 50 and 60 Hz should be already damped
-8. The maximum absolute accepted voltage of the DAQ is 7 V.
+8. The maximum accepted input voltage for the DAQ is +/- 7 V

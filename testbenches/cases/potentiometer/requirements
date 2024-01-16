@@ -1,7 +1,8 @@
-1. The potentiometer is inserted into a voltage divider
-2. The architecture is simple: there is a voltage divider, an anti-aliasing filter and then the DAQ measures the voltage.
-3. The input voltage of the DAQ is centered in 0, for example, +/- 7V.
-4. There is a safety net that stops the output voltage from surpassing the maximum value of +/- 7V. This is absolutely required.
-5. The is an anti-aliasing filter
-6. The cutoff frequency of the anti-aliasing filter is specified to be around 10 and 30 Hz.
-7. The order of the anti-aliasing filter is specified to be 3 or 4.
+1. The potentiometer is used as a voltage divider
+2. The voltage applied to the potentiometer is +/- 10 V
+3. The architecture is simple: there is a voltage divider (with or without a voltage buffer), an anti-aliasing filter and then the DAQ measures the voltage.
+4. The input voltage of the DAQ is centered in 0, for example, +/- 7V.
+5. The maximum voltage applied to the DAQ is 7V (this is absolutely necessary and fatal if false)
+6. The is a low pass filter (or anti-aliasing filter) that avoids a aliasing
+7. There is a filter removing frequencies between around 50 and 60 Hz
+8. The filter has a cutoff frequency and order such that the gain of the signal is of at least -20 dB at 500 Hz

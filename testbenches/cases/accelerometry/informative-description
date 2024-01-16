@@ -1,1 +1,2 @@
-Design a portable device capable of measuring low-frequency vibration, in which all required component values and requirements are correctly calculated and presented.
+Design a portable device capable of measuring a low-frequency vibration.
+Make sure to calculate all components and overall values involved in the project, including maximum bias current, charge amplifier components considering a peak-to-peak voltage output.

@@ -24,7 +24,7 @@ var DetailsFeedback string
 var Summary string
 
 //go:embed summary/review
-var Review string
+var ReviewSolution string
 
 //go:embed details/A-Sensor/questions
 var detailsQuestions_A string

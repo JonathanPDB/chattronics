@@ -1,13 +1,17 @@
 Now provide a compilation of the entire solution provided by you throughout the whole conversation.
 Don't repeat the information, but also do not remove important details that were provided.
 Make sure that everything is in the correct order to be presented to the user.
+Include component values, component name/model, required techniques to use, etc.
+Include entire calculations, showing the steps that were taken and so on.
+Include ANYTHING that is related to numeric values, even if its side information.
+Do not include user messages, boilerplate info, etc
 Start with a title.
 
+Your answer must be organized based on the architecture blocks.
 Your answer must be in exactly the following template, where all caps words are placeholders that you must fill in:
 
 ```Summary
 TITLE HERE
-
 
 SUMMARY HERE
 ```

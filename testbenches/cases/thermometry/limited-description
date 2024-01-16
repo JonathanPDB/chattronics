@@ -1,7 +1,9 @@
 I want to develop a project that measures the temperature of water inside a beaker with a thermistor and that outputs a voltage that can be easily measured by a multimeter.
+
 The output voltage range to be measured by the multimeter should be between 0 and 20 Volts.
-The temperatures that will be measured are between 10 and 90 degrees celsius.
-The self heating effect must be considered and therefore the current must be limited.
-There should be no ADC.
-The sensor to be used is a NTC.
+The temperature that will be measured is between 10 and 90 degrees celsius.
+The self heating effect must be considered and must be less than 1%.
+There should be no ADC other than the one inside the multimeter (which can't be changed).
+All conditioning should be done in the analog domain
+The sensor to be used is a NTC Vishay NTCLE100E3.
 The NTC must be linearized for the midpoint of the input range by a resistor in parallel

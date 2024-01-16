@@ -9,9 +9,6 @@ import (
 //go:embed prompts/informative-sys
 var BaseInformative string
 
-//go:embed prompts/evaluate-sys
-var BaseEvaluator string
-
 //go:embed prompts/score-sys
 var BaseScoreEvaluator string
 

@@ -39,7 +39,6 @@ clean:
 	@rm -f $(PROJECT)
 	@rm -f $(PROJECT)-limited
 	@rm -f $(PROJECT)-informative
-	@find ./runs -type d -empty -delete
 	@find ./runs -type d -name "*_TEST" -exec rm -rf {} +
 
 SHELL=bash

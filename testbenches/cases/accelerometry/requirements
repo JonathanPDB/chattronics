@@ -1,8 +1,9 @@
-1. The feedback resistance times the feedback capacitance must be equal to around 0.636
-2. The amplifier gain times 1.61 times the feedback capacitance should be around 1
-3. The bias current must be provided
-4. 0.01 divided by the feedback resistance must equal the bias current
-5. The project uses a charge amplifier to condition the piezoelectric sensor
-6. The project is optimised for an input oscillation of 2Hz and 5cm amplitude and has calculations to back it up.
-7. The output voltage is 1V peak to peak
-8. The offset is less than 10mV
+1. On the charge amplifier, the feedback resistance times the feedback capacitance must be roughly around 2/pi (you can allow up to 10% difference from this value)
+2. The charge amplifier gain multiplied by 1.61E-12 and divided by the feedback capacitance (G x 1.61p / Cf) should be roughly around 1 (you can allow up to 10% difference from this value)
+3. The peak-to-peak charge output is calculated to be around 161 pC
+4. The bias current must be provided
+5. 0.01 divided by the feedback resistance must equal the bias current
+6. The project uses a charge amplifier to condition the piezoelectric sensor
+7. The project is optimised for an input oscillation of 2 Hz and 5 cm amplitude and has calculations to back it up.
+8. The output voltage is 1 V peak to peak
+9. The offset should be kept below 10 mV

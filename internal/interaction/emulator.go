@@ -9,27 +9,27 @@ import (
 )
 
 const (
-	gptUserModel       = gpt.GPT4Turbo
-	gptUserTemperature = 0.2
+	emulatorGptModel       = gpt.GPT4Turbo
+	emulatorGptTemperature = 0.5
 )
 
-type GPTUser struct {
+type Emulator struct {
 	projectPrompt string
 	systemPrompt  string
 	counter       int
 	gpt           *gpt.GPT
 }
 
-func CreateGPTUser(projectPrompt, systemPrompt, apiKey string) User {
-	return &GPTUser{
+func CreateEmulatorUser(projectPrompt, systemPrompt, apiKey string) User {
+	return &Emulator{
 		projectPrompt: projectPrompt,
 		systemPrompt:  systemPrompt,
 		counter:       0,
-		gpt:           gpt.NewGPT(gptUserModel, apiKey, gptUserTemperature, "mock_user"),
+		gpt:           gpt.NewGPT(emulatorGptModel, apiKey, emulatorGptTemperature, "emulator"),
 	}
 }
 
-func (g *GPTUser) ReadConsole() string {
+func (g *Emulator) ReadConsole() string {
 	if g.counter == 0 {
 		g.counter++
 		return g.projectPrompt
@@ -38,7 +38,7 @@ func (g *GPTUser) ReadConsole() string {
 	return "no"
 }
 
-func (g *GPTUser) AskQuestions(questions []string) string {
+func (g *Emulator) AskQuestions(questions []string) string {
 	var answers []string
 	systemPrompt := gpt.ReplaceSystemPrompt(gpt.Messages{}, g.systemPrompt)
 
@@ -62,6 +62,6 @@ func (g *GPTUser) AskQuestions(questions []string) string {
 	return strings.Join(answers, "\n")
 }
 
-func (g *GPTUser) IsUserSatisfied() bool {
+func (g *Emulator) IsUserSatisfied() bool {
 	return true
 }

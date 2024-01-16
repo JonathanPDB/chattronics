@@ -84,5 +84,7 @@ func (gpt *GPT) log(prompt Messages, r openai.ChatCompletionResponse) error {
 		ResponseMessage: r.Choices[0].Message.Content,
 		Cost:            gpt.totalCost,
 		FinishReason:    string(r.Choices[0].FinishReason),
+		InputTokens:     r.Usage.PromptTokens,
+		OutputTokens:    r.Usage.CompletionTokens,
 	})
 }

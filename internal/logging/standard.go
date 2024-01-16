@@ -21,7 +21,6 @@ func InitializeStandardLogger() {
 	cfg := zap.NewProductionConfig()
 	cfg.EncoderConfig.MessageKey = "message"
 	cfg.EncoderConfig.TimeKey = "ts"
-	// cfg.EncoderConfig.EncodeLevel = zapcore.CapitalColorLevelEncoder
 	cfg.EncoderConfig.EncodeTime = zapcore.TimeEncoderOfLayout(time.RFC3339)
 	cfg.Encoding = "console"
 	cfg.Level.SetLevel(zap.DebugLevel)

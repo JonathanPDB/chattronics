@@ -107,15 +107,17 @@ func TestExtractSingleBlock(t *testing.T) {
 	})
 }
 
-func TestExtractJSON(t *testing.T) {
+func TestExtractJSONSlice(t *testing.T) {
 	t.Run("Successfully extract JSON from message", func(t *testing.T) {
-		givenMessage := `This is your response:\n\n{"question1":"What is the meaning of life?","question2":"hello?"}\nFinished message.`
-		expectedMap := map[string]string{
-			"question1": "What is the meaning of life?",
-			"question2": "hello?",
+		givenMessage := `This is your response:\n\n{"questions":["What is the meaning of life?","hello?"]}\nFinished message.`
+		expectedMap := map[string][]string{
+			"questions": {
+				"What is the meaning of life?",
+				"hello?",
+			},
 		}
 
-		actualMap, err := ExtractJSON(givenMessage)
+		actualMap, err := ExtractJsonSlice(givenMessage)
 
 		assert.NoError(t, err)
 		assert.EqualValues(t, expectedMap, actualMap)

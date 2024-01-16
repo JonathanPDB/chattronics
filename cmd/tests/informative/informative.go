@@ -46,7 +46,7 @@ func main() {
 		return
 	}
 
-	user := interaction.CreateGPTUser(projectDesc, informativeSysPrompt, apiKey)
+	user := interaction.CreateEmulatorUser(projectDesc, informativeSysPrompt, apiKey)
 
 	verdicts := map[string]int{
 		"generic":    0,
@@ -57,14 +57,14 @@ func main() {
 		"INVALID":    0,
 	}
 
-	//scoresSum := 0
+	scoresSum := 0
 
 	for i := 0; i < iterations; i++ {
 		config.CreateFolders(folderName+"/"+strconv.Itoa(i), true) //TODO: Fix how the log folder is working
 
 		gptModel := gpt.NewGPT(model, apiKey, float32(temperature), "engineer")
 
-		compilation, listedSolution, err := internal.RunApp(gptModel, user)
+		compilation, err := internal.RunApp(gptModel, user)
 		if err != nil {
 			logging.Fatal("Failed to run application", logging.AddField("error", err))
 			return
@@ -76,7 +76,7 @@ func main() {
 			return
 		}
 
-		err = evaluate.GiveScores(listedSolution, requirements, apiKey)
+		score, err := evaluate.GiveScores(compilation, requirements, apiKey)
 		if err != nil {
 			logging.Fatal("Failed to get scores", logging.AddField("error", err))
 			return
@@ -88,16 +88,16 @@ func main() {
 			verdicts["INVALID"]++
 		}
 
-		//scoresSum += score
+		scoresSum += score
 
 		logging.Info("Finished iteration.",
-			//logging.AddField("score", score),
+			logging.AddField("score", score),
 			logging.AddField("verdict", verdict),
 		)
 	}
 
 	logging.Info("Final results.",
-		//logging.AddField("score_average", scoresSum/iterations),
+		logging.AddField("score_average", scoresSum/iterations),
 		logging.AddField("verdicts", verdicts),
 	)
 }

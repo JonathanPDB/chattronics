@@ -1,1 +1,2 @@
-Design a system to monitor pressure and surface tempera-ture variations at eight points in a machine and the data is to be analysed by computer.
+Design a system to monitor pressure and surface temperature variations at eight points of a machine and the data is to be analysed by computer.
+Design the acquisition system but don't worry about any software implementations or logic analysis.

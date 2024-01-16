@@ -1,11 +1,16 @@
 package stages
 
 import (
+	"github.com/chattronics/chattronics/internal/config"
+	"github.com/chattronics/chattronics/internal/logging"
 	"github.com/stretchr/testify/assert"
 	"testing"
 )
 
 func TestParseCategories(t *testing.T) {
+	config.CreateFolders("", false)
+	logging.InitializeStandardLogger()
+
 	t.Run("Should parse categories correctly", func(t *testing.T) {
 		givenCategories := []string{
 			"NTC Thermistor=A",

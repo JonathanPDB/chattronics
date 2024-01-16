@@ -1,10 +1,8 @@
 1. Use a piezoelectric accelerometer
-2. The accelerometer has a sensitivity of 100 pC/g
-3. An input oscillation has a frequency of 2Hz
-4. The input oscillation has an amplification of 5cm.
-5. Output voltage should be 1 V peak to peak
-6. Low frequency response is 3 dB down at 0.25 Hz
-7. The offset should be kept as less than 10mv
-8. The minimum value of the feedback resistance should be calculated
-9. The maximum amplifier bias current is should be calculated
-10. The feedback capacitance in the charge amplifier should be calculated
+2. The accelerometer has a sensitivity of 100 pC/g (g is the acceleration due to gravity)
+3. Use the peak to peak acceleration to calculate charge
+4. An input oscillation has a frequency up to 2 Hz
+5. The input oscillation has a peak amplification of 5 cm.
+6. Output voltage should be 1 V peak to peak
+7. Low frequency response of the system has to be 3 dB down at 0.25 Hz
+8. The offset should be kept as less than 10 mV

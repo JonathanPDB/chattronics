@@ -1,10 +1,10 @@
-1. The accuracy should be at least of 1%
+1. The accuracy of both sensors should be at of 1%
 2. The pressure sensors have a maximum output of 1 mV
-3. Temperature sensors are radiation detectors having a maximum output of 100 m V
+3. Temperature sensors are radiation detectors having a maximum output of 100 mV
 4. Temperature sensors have a nonlinear scale
 5. Strain-gauge should be used as the pressure sensor
 6. Infrared radiation detectors should be used for the surface temperature sensor.
 7. Assume all pressure sensors have identical sensitivity
-8. Signal frequencies of 400 Hz are expected
+8. Signal frequencies up to 400 Hz are expected
 9. Frequencies higher than 400 Hz (if present) need not be recorded.
-10. The ADC should be a SAR
+10. The ADC should sample one channel at a time

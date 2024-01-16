@@ -11,24 +11,23 @@ import (
 func getRequirements() string {
 	return "" +
 		"1. Use an NTC\n" +
-		"2. Linearize the NTC.\n" +
+		"2. Linearize the NTC analogically.\n" +
 		"3. Use a resistor calculated via the 3 point method to linearize the NTC.\n" +
-		"4. Use a Wheatstone bridge instead of measuring the resistance.\n" +
-		"5. Amplify the signal before measuring.\n" +
-		"6. Take into account the fact that the maximum current cannot cause a significant auto heating effect."
+		"4. The order of the filtering is at least 3\n" +
+		"5. There is a method to control the current that goes through the NTC." +
+		"6. The value of the gain should be somewhat close to -2.15"
 }
 
-func TestEvaluate(t *testing.T) {
+func TestGiveScores(t *testing.T) {
 	config.CreateFolders("", false)
 	apiKey := config.LoadApiKeyEnvVar()
 	logging.InitializeStandardLogger()
 
-	iterations := 2
+	iterations := 1
 
 	type testCase struct {
-		givenSummary    string
-		expectedScore   int
-		expectedVerdict string
+		givenSummary  string
+		expectedScore int
 	}
 
 	testTable := []testCase{
@@ -37,16 +36,15 @@ func TestEvaluate(t *testing.T) {
 				"\n" +
 				"\n" +
 				"This project consists in measuring the temperature of the water inside a glass beaker.\n" +
-				"For this, a NTC will be used in conjunction with series of conditioning stages, which will " +
+				"For this, a NTC Vishay BC123 will be used in conjunction with series of conditioning stages, which will " +
 				"enable the measurement of a output voltage by using a simple commercial multimeter.\n" +
 				"The first stage consists of the NTC sensor, which will be used for temperatures between 15 and " +
 				"85 degrees celsius. Instead of measuring the resistance, a Wheatstone bridge will be used, in which " +
 				"the other 3 elements of the bridge will guarantee a differential voltage of zero for a temperature " +
-				"of 15 degrees. After the bridge, a instrumentation amplifier will be used with a gain of 200, so that " +
-				"the voltage can be easily measured by using a low quality multimeter. Given that there is no digital " +
-				"processing, there is no need of using a low pass filter for anti-aliasing.",
-			expectedScore:   3,
-			expectedVerdict: "acceptable",
+				"of 15 degrees. After the bridge, a inverting amplifier in which the resistor values are R_f=4k, R_in=2k, so that " +
+				"the voltage can be easily measured by using a low quality multimeter. The final stage before the multimeter is" +
+				"a sallen-key low pass filter with a cutoff frequency of 10 Hz, in such a way that 100 Hz the damping is at -40 dB",
+			expectedScore: 3,
 		},
 	}
 
@@ -55,12 +53,11 @@ func TestEvaluate(t *testing.T) {
 
 		for i := 0; i < iterations; i++ {
 			fmt.Printf("Iteration %d\n", i)
-			score, verdict, explanations, err := Evaluate(test.givenSummary, getRequirements(), apiKey)
+
+			score, err := GiveScores(test.givenSummary, getRequirements(), apiKey)
 
 			assert.NoError(t, err)
-			assert.NotEmpty(t, explanations)
-			assert.NotEqual(t, test.expectedScore, score)
-			assert.Equal(t, test.expectedVerdict, verdict)
+			assert.Equal(t, test.expectedScore, score)
 		}
 	}
 }

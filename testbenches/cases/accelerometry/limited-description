@@ -1,8 +1,11 @@
-Design a portable device capable of measuring low-frequency vibration.
+Design a portable device capable of measuring a low-frequency vibration.
+Make sure to calculate all components and overall values involved in the project, including maximum bias current, charge amplifier components considering a peak-to-peak voltage output.
+
 Use a piezoelectric accelerometer
-The accelerometer has a sensitivity of 100 pC/g
-An input oscillation has a frequency of 2Hz
-The input oscillation has an amplification of 5cm.
+The accelerometer has a sensitivity of 100 pC/g (g is the acceleration due to gravity)
+Use the peak to peak acceleration to calculate charge
+An input oscillation has a frequency up to 2 Hz
+The input oscillation has a peak amplification of 5 cm.
 Output voltage should be 1 V peak to peak
-Low frequency response is 3 dB down at 0.25 Hz
-The offset should be kept as less than 10mv
+Low frequency response of the system has to be 3 dB down at 0.25 Hz
+The offset should be kept as less than 10 mV

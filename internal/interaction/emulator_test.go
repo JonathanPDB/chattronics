@@ -11,14 +11,14 @@ import (
 	"testing"
 )
 
-func TestGPTUser_ReadConsole(t *testing.T) {
+func TestEmulator_ReadConsole(t *testing.T) {
 	config.CreateFolders("", false)
 	logging.InitializeStandardLogger()
 
 	t.Run("Successfully return project description only in the first iteration", func(t *testing.T) {
 		givenProjectDesc := "Mock project description"
 
-		user := CreateGPTUser(givenProjectDesc, "Mock system prompt", "123")
+		user := CreateEmulatorUser(givenProjectDesc, "Mock system prompt", "123")
 		resp := user.ReadConsole()
 		assert.Equal(t, givenProjectDesc, resp)
 
@@ -29,7 +29,7 @@ func TestGPTUser_ReadConsole(t *testing.T) {
 	})
 }
 
-func TestGPTUser_AskQuestions(t *testing.T) {
+func TestEmulator_AskQuestions(t *testing.T) {
 	config.CreateFolders("", false)
 	apiKey := config.LoadApiKeyEnvVar()
 	logging.InitializeStandardLogger()
@@ -63,7 +63,7 @@ func TestGPTUser_AskQuestions(t *testing.T) {
 
 	for k, test := range testTable {
 		fmt.Printf("\nStating Testcase %d\n", k)
-		user := CreateGPTUser("", test.sysPrompt, apiKey)
+		user := CreateEmulatorUser("", test.sysPrompt, apiKey)
 
 		for i := 0; i < iterations; i++ {
 			fmt.Printf("Iteration %d\n", i)

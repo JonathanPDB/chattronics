@@ -49,28 +49,6 @@ func ExtractMarkdown(message, language string) MarkdownBlock {
 	return desiredBlock
 }
 
-func ExtractJSON(message string) (map[string]string, error) {
-	_, trimmedMessage, found := strings.Cut(message, "{")
-	if !found {
-		return nil, fmt.Errorf("did not find the character { inside the message")
-	}
-
-	trimmedMessage, _, found = strings.Cut(trimmedMessage, "}")
-	if !found {
-		return nil, fmt.Errorf("did not find the character } inside the message")
-	}
-
-	trimmedMessage = "{" + trimmedMessage + "}"
-
-	var extractedJson map[string]string
-	err := json.Unmarshal([]byte(trimmedMessage), &extractedJson)
-	if err != nil {
-		return nil, fmt.Errorf("failed to unmarshal trimmed message: %w", err)
-	}
-
-	return extractedJson, nil
-}
-
 func ExtractJsonSlice(message string) (map[string][]string, error) {
 	_, trimmedMessage, found := strings.Cut(message, "{")
 	if !found {

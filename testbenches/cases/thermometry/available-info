@@ -1,6 +1,7 @@
 1. The output voltage range to be measured by the multimeter should be between 0 and 20 Volts.
-2. The temperatures that will be measured are between 10 and 90 degrees celsius.
-3. The self heating effect must be considered and therefore the current must be limited.
-4. There should be no ADC.
-5. The sensor to be used is a NTC.
-6. The NTC must be linearized for the midpoint of the input range by a resistor in parallel
+2. The temperature that will be measured is between 10 and 90 degrees celsius.
+3. The self heating effect must be considered and must be less than 1%.
+4. There should be no ADC other than the one inside the multimeter (which can't be changed).
+5. All conditioning should be done in the analog domain
+6. The sensor to be used is a NTC Vishay NTCLE100E3.
+7. The NTC must be linearized for the midpoint of the input range by a resistor in parallel

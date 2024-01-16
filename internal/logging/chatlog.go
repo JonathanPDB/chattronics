@@ -17,6 +17,8 @@ type InteractionLog struct {
 	ResponseMessage string      `json:"response"`
 	Cost            float64     `json:"cost"`
 	FinishReason    string      `json:"finish_reason"`
+	InputTokens     int         `json:"input_tokens"`
+	OutputTokens    int         `json:"output_tokens"`
 }
 
 func NewChatLogger(persona string) *ChatLogger {

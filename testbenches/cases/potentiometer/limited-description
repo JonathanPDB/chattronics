@@ -1,6 +1,6 @@
 I want to develop a project that calculates the angle of a pendulum by using a potentiometer.
 The component will be fixed to a wooden structure and another beam will be connected to the adjustable pin.
-The output must be viewed using LabVIEW and, therefore, will be sampled using a DAQ.
+The analog output will be sent to a DAQ which cannot be altered or tuned.
 Use the simplest design possible, which takes into account all requirements.
 
 The potentiometer is linear
@@ -8,7 +8,7 @@ The value of the potentiometer is 10 kOhms
 The power source connected to the potentiometer is between -10 and 10 Volts
 The angle range that the potentiometer should be able to measure is from 45 to 135 degrees, in which 90 degrees corresponds to the steady position
 The sampling rate of the DAQ is 1000 samples per second.
-Frequencies around 50 and 60 Hz should be already damped and filtered out.
+Frequencies around 50 and 60 Hz should be attenuated.
 The conditioning should be done in the analog domain
 The DAQ is only for acquisition, you can not alter its configuration.
 The maximum accepted input voltage for the DAQ is +/- 7 V

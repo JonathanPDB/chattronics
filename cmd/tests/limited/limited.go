@@ -46,8 +46,6 @@ func main() {
 		return
 	}
 
-	user := interaction.CreateMockUser(limitedScenarioPrompt)
-
 	verdicts := map[string]int{
 		"generic":    0,
 		"acceptable": 0,
@@ -60,6 +58,8 @@ func main() {
 	scoresSum := 0
 
 	for i := 0; i < iterations; i++ {
+		user := interaction.CreateMockUser(limitedScenarioPrompt)
+
 		config.CreateFolders(folderName+"/"+strconv.Itoa(i), true)
 
 		gptModel := gpt.NewGPT(model, apiKey, float32(temperature), "engineer")

@@ -1,0 +1,16 @@
+Score: 11
+Explanations: 
+1. Both sensors have d.c. output: The pressure sensor outputs a maximum of 1 mV in a Wheatstone bridge configuration, which is a DC signal, and the temperature sensor outputs up to 100 mV, which is also a DC signal. Requirement met.
+2. Both sensors must be amplified: The project specifies gains for both pressure (Gp = 5000) and temperature sensors (Gt = 50), indicating that amplification is indeed part of the design. Requirement met.
+3. The pressure sensor is inserted in a Wheatstone bridge and amplified by an instrumentation amplifier: The pressure sensor's output is specifically mentioned to be in a Wheatstone bridge configuration and will be amplified by a three-op-amp instrumentation amplifier. Requirement met.
+4. An ADC should be used: The project mentions the use of an ADC with a resolution of 12 bits or higher and a sampling rate of ≥2500 samples per second per channel. Requirement met.
+5. Infrared radiation sensors are being linearized: The project mentions that temperature linearization is performed either digitally using a microcontroller or by an analog circuit, which could include diode networks or log amplifiers. However, the specific use of diode networks or log amplifiers is not explicitly stated, so this requirement is not clearly met.
+6. The solution mentions the sampling order strategy: The project does not explicitly mention the sampling order strategy (sequential, simultaneous, etc.). Requirement not met.
+7. The sampling frequency of the ADC is not less than 800 Hz: The ADC sampling rate is specified as ≥2500 samples per second per channel, which is above 800 Hz. Requirement met.
+8. The anti-aliasing filter has a cutoff frequency and order such that the gain of the signal is of at least -20 dB at half the sampling frequency: The filter is a 4th-order Butterworth with a cutoff frequency of 500 Hz. At 1250 Hz (half the sampling frequency of 2500 Hz), the gain would be significantly more than -20 dB due to the 80 dB/decade attenuation rate. Requirement met.
+9. The low pass cutoff frequency is higher than 400 Hz and lower than half the total sampling frequency: The cutoff frequency of the anti-aliasing filter is 500 Hz, which is higher than 400 Hz and lower than half the total sampling frequency of 2500 Hz (which would be 1250 Hz). Requirement met.
+10. There are low-pass filters positioned before the multiplexer(s): The anti-aliasing filter is described, but the position relative to the multiplexer is not explicitly stated. We can infer that it's before the multiplexer because that is standard practice to reduce aliasing before the signal is sampled by the ADC. Requirement met.
+11. The project uses multiplexer(s): A 16-to-1 analog multiplexer is included in the design. Requirement met.
+12. The multiplexers are solid state: The CD4051B analog multiplexer is a solid-state device. Requirement met.
+
+Overall, the project meets 11 out of the 12 requirements. The only requirement not clearly met is the explicit mention of the sampling order strategy.

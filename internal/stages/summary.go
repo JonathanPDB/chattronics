@@ -40,13 +40,6 @@ func GenerateSummary(m *gpt.GPT, msgs gpt.Messages) (string, error) {
 
 	interaction.PrintGPTMessage("SUMMARY\n\n" + summary)
 
-	//compilation := compileAssistantMessages(msgs)
-	//file = config.RunFolderPath + compilationFileName
-	//err = os.WriteFile(file, []byte(compilation), 0666)
-	//if err != nil {
-	//	return "", fmt.Errorf("error writing compilation to file: %w", err)
-	//}
-
 	return summary, err
 }
 

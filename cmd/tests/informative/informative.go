@@ -46,8 +46,6 @@ func main() {
 		return
 	}
 
-	user := interaction.CreateEmulatorUser(projectDesc, informativeSysPrompt, apiKey)
-
 	verdicts := map[string]int{
 		"generic":    0,
 		"acceptable": 0,
@@ -60,6 +58,8 @@ func main() {
 	scoresSum := 0
 
 	for i := 0; i < iterations; i++ {
+		user := interaction.CreateEmulatorUser(projectDesc, informativeSysPrompt, apiKey)
+		
 		config.CreateFolders(folderName+"/"+strconv.Itoa(i), true) //TODO: Fix how the log folder is working
 
 		gptModel := gpt.NewGPT(model, apiKey, float32(temperature), "engineer")

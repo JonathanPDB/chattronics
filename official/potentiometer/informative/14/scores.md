@@ -1,0 +1,10 @@
+Score: 7
+Explanations: 
+1. The potentiometer is used as a voltage divider: The selection of a linear potentiometer and its implementation suggests that it is indeed being used as a voltage divider. (Reached)
+2. The voltage applied to the potentiometer is +/- 10 V: The expected power source is stated to be -10V to +10V, which fulfills this requirement. (Reached)
+3. The architecture is simple: The description outlines a simple architecture consisting of a potentiometer, a buffer stage (voltage buffer), a low-pass filter, and a notch filter, followed by the DAQ system. (Reached)
+4. The input voltage of the DAQ is centered in 0, for example, +/- 7V: The buffer stage is designed with a gain of 0.7 to scale the potentiometer output to match the DAQ's input range of +/- 7V. (Reached)
+5. The maximum voltage applied to the DAQ is 7V: The buffer stage gain ensures the maximum voltage to the DAQ is 7V, which is critical as stated. (Reached)
+6. There is a low pass filter (or anti-aliasing filter) that avoids aliasing: A low-pass filter with a cutoff frequency between 150 Hz and 200 Hz is included to remove high-frequency noise and prevent aliasing. (Reached)
+7. There is a filter removing frequencies between around 50 and 60 Hz: A notch filter is specifically mentioned to attenuate 50 Hz and 60 Hz power line noise. (Reached)
+8. The filter has a cutoff frequency and order such that the gain of the signal is of at least -20 dB at 500 Hz: Although the cutoff frequency of the low-pass filter is mentioned to be between 150 Hz and 200 Hz, there is no explicit information about the gain of the signal at 500 Hz. However, a first-order filter typically has a slope of -20 dB/decade, and a second-order filter has -40 dB/decade. Given the cutoff is around 150-200 Hz, the 500 Hz point is within the first decade above the cutoff frequency, and thus the filter would not meet a -20 dB gain reduction by 500 Hz. This requirement is not reached.

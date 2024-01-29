@@ -7,7 +7,7 @@ import (
 )
 
 //go:embed prompts/informative-sys
-var BaseInformative string
+var BaseInvestigative string
 
 //go:embed prompts/score-sys
 var BaseScoreEvaluator string
@@ -20,11 +20,11 @@ var BaseVerdictEvaluator string
 //go:embed potentiometer/available-info
 var availableInfoPotentiometer string
 
-//go:embed potentiometer/informative-description
-var informativeDescPotentiometer string
+//go:embed potentiometer/investigative-description
+var investigativeDescPotentiometer string
 
-//go:embed potentiometer/limited-description
-var limitedDescPotentiometer string
+//go:embed potentiometer/direct-description
+var directDescPotentiometer string
 
 //go:embed potentiometer/requirements
 var requirementsPotentiometer string
@@ -34,11 +34,11 @@ var requirementsPotentiometer string
 //go:embed thermometry/available-info
 var availableInfoThermometry string
 
-//go:embed thermometry/informative-description
-var informativeDescThermometry string
+//go:embed thermometry/investigative-description
+var investigativeDescThermometry string
 
-//go:embed thermometry/limited-description
-var limitedDescThermometry string
+//go:embed thermometry/direct-description
+var directDescThermometry string
 
 //go:embed thermometry/requirements
 var requirementsThermometry string
@@ -48,11 +48,11 @@ var requirementsThermometry string
 //go:embed accelerometry/available-info
 var availableInfoAccelerometry string
 
-//go:embed accelerometry/informative-description
-var informativeDescAccelerometry string
+//go:embed accelerometry/investigative-description
+var investigativeDescAccelerometry string
 
-//go:embed accelerometry/limited-description
-var limitedDescAccelerometry string
+//go:embed accelerometry/direct-description
+var directDescAccelerometry string
 
 //go:embed accelerometry/requirements
 var requirementsAccelerometry string
@@ -62,11 +62,11 @@ var requirementsAccelerometry string
 //go:embed machine/available-info
 var availableInfoMachine string
 
-//go:embed machine/informative-description
-var informativeDescMachine string
+//go:embed machine/investigative-description
+var investigativeDescMachine string
 
-//go:embed machine/limited-description
-var limitedDescMachine string
+//go:embed machine/direct-description
+var directDescMachine string
 
 //go:embed machine/requirements
 var requirementsMachine string
@@ -78,37 +78,37 @@ const (
 	machine       = "machine"
 )
 
-func GetInformative(testcase string) (string, string, error) {
+func GetInvestigative(testcase string) (string, string, error) {
 	switch strings.ToLower(testcase) {
 	case thermometry:
-		informativeSysPrompt := BaseInformative + availableInfoThermometry
-		return informativeDescThermometry, informativeSysPrompt, nil
+		investigativeSysPrompt := BaseInvestigative + availableInfoThermometry
+		return investigativeDescThermometry, investigativeSysPrompt, nil
 	case potentiometer:
-		informativeSysPrompt := BaseInformative + availableInfoPotentiometer
-		return informativeDescPotentiometer, informativeSysPrompt, nil
+		investigativeSysPrompt := BaseInvestigative + availableInfoPotentiometer
+		return investigativeDescPotentiometer, investigativeSysPrompt, nil
 	case accelerometry:
-		informativeSysPrompt := BaseInformative + availableInfoAccelerometry
-		return informativeDescAccelerometry, informativeSysPrompt, nil
+		investigativeSysPrompt := BaseInvestigative + availableInfoAccelerometry
+		return investigativeDescAccelerometry, investigativeSysPrompt, nil
 	case machine:
-		informativeSysPrompt := BaseInformative + availableInfoMachine
-		return informativeDescMachine, informativeSysPrompt, nil
+		investigativeSysPrompt := BaseInvestigative + availableInfoMachine
+		return investigativeDescMachine, investigativeSysPrompt, nil
 	default:
-		return "", "", fmt.Errorf("did not find test case for informative prompts")
+		return "", "", fmt.Errorf("did not find test case for investigative prompts")
 	}
 }
 
-func GetLimited(testcase string) (string, error) {
+func GetDirect(testcase string) (string, error) {
 	switch strings.ToLower(testcase) {
 	case thermometry:
-		return limitedDescThermometry, nil
+		return directDescThermometry, nil
 	case potentiometer:
-		return limitedDescPotentiometer, nil
+		return directDescPotentiometer, nil
 	case accelerometry:
-		return limitedDescAccelerometry, nil
+		return directDescAccelerometry, nil
 	case machine:
-		return limitedDescMachine, nil
+		return directDescMachine, nil
 	default:
-		return "", fmt.Errorf("did not find test case for limited prompts")
+		return "", fmt.Errorf("did not find test case for direct prompts")
 	}
 }
 

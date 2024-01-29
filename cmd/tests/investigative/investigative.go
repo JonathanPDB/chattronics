@@ -12,7 +12,7 @@ import (
 	"strconv"
 )
 
-const folderPrefix = "informative_"
+const folderPrefix = "investigative_"
 
 var (
 	model       string
@@ -34,9 +34,9 @@ func main() {
 	logging.InitializeStandardLogger()
 	apiKey := config.LoadApiKeyEnvVar()
 
-	projectDesc, informativeSysPrompt, err := cases.GetInformative(testCase)
+	projectDesc, informativeSysPrompt, err := cases.GetInvestigative(testCase)
 	if err != nil {
-		logging.Fatal("Failed to get limited scenario information", logging.AddField("error", err))
+		logging.Fatal("Failed to get investigative scenario information", logging.AddField("error", err))
 		return
 	}
 
@@ -59,7 +59,7 @@ func main() {
 
 	for i := 0; i < iterations; i++ {
 		user := interaction.CreateEmulatorUser(projectDesc, informativeSysPrompt, apiKey)
-		
+
 		config.CreateFolders(folderName+"/"+strconv.Itoa(i), true) //TODO: Fix how the log folder is working
 
 		gptModel := gpt.NewGPT(model, apiKey, float32(temperature), "engineer")

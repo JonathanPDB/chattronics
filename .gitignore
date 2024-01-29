@@ -3,9 +3,8 @@
 .vscode
 /chattronics
 runs
-chattronics-informative
-chattronics-limited
+chattronics-investigative
+chattronics-direct
 chattronics
-preliminary-tests
 validation-tests
 *.DS_Store

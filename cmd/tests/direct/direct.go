@@ -12,7 +12,7 @@ import (
 	"strconv"
 )
 
-const folderPrefix = "limited_"
+const folderPrefix = "direct_"
 
 var (
 	model       string
@@ -34,9 +34,9 @@ func main() {
 	logging.InitializeStandardLogger()
 	apiKey := config.LoadApiKeyEnvVar()
 
-	limitedScenarioPrompt, err := cases.GetLimited(testCase)
+	directScenarioPrompt, err := cases.GetDirect(testCase)
 	if err != nil {
-		logging.Fatal("Failed to get limited scenario information", logging.AddField("error", err))
+		logging.Fatal("Failed to get direct scenario information", logging.AddField("error", err))
 		return
 	}
 
@@ -58,7 +58,7 @@ func main() {
 	scoresSum := 0
 
 	for i := 0; i < iterations; i++ {
-		user := interaction.CreateMockUser(limitedScenarioPrompt)
+		user := interaction.CreateMockUser(directScenarioPrompt)
 
 		config.CreateFolders(folderName+"/"+strconv.Itoa(i), true)
 

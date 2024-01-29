@@ -14,31 +14,31 @@ run:
 	@./$(PROJECT) -model=$(model) -temperature=$(temperature)
 
 
-.PHONY: build-limited
-build-limited:
+.PHONY: build-direct
+build-direct:
 	@make clean
-	@go build -o $(PROJECT)-limited ./cmd/tests/limited/limited.go
+	@go build -o $(PROJECT)-direct ./cmd/tests/direct/direct.go
 
-run-limited:
+run-direct:
 	clear
-	@./$(PROJECT)-limited -model=$(model) -temperature=$(temperature) -iterations=$(iterations) -testCase=$(testCase)
+	@./$(PROJECT)-direct -model=$(model) -temperature=$(temperature) -iterations=$(iterations) -testCase=$(testCase)
 
-.PHONY: build-informative
-build-informative:
+.PHONY: build-investigative
+build-investigative:
 	@make clean
-	@go build -o $(PROJECT)-informative ./cmd/tests/informative/informative.go
+	@go build -o $(PROJECT)-investigative ./cmd/tests/investigative/investigative.go
 
-run-informative:
+run-investigative:
 	clear
-	@./$(PROJECT)-informative -model=$(model) -temperature=$(temperature) -iterations=$(iterations) -testCase=$(testCase)
+	@./$(PROJECT)-investigative -model=$(model) -temperature=$(temperature) -iterations=$(iterations) -testCase=$(testCase)
 
 unit-test:
 	go test ./pkg/*** -cover
 
 clean:
 	@rm -f $(PROJECT)
-	@rm -f $(PROJECT)-limited
-	@rm -f $(PROJECT)-informative
+	@rm -f $(PROJECT)-direct
+	@rm -f $(PROJECT)-investigative
 	@find ./runs -type d -name "*_TEST" -exec rm -rf {} +
 
 SHELL=bash

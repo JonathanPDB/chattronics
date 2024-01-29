@@ -66,20 +66,20 @@ func main() {
 
 		compilation, err := internal.RunApp(gptModel, user)
 		if err != nil {
-			logging.Fatal("Failed to run application", logging.AddField("error", err))
-			return
+			logging.Error("Failed to run application", err)
+			continue
 		}
 
 		verdict, err := evaluate.GiveVerdict(compilation, requirements, apiKey)
 		if err != nil {
-			logging.Fatal("Failed to get verdict", logging.AddField("error", err))
-			return
+			logging.Error("Failed to get verdict", err)
+			continue
 		}
 
 		score, err := evaluate.GiveScores(compilation, requirements, apiKey)
 		if err != nil {
-			logging.Fatal("Failed to get scores", logging.AddField("error", err))
-			return
+			logging.Error("Failed to get scores", err)
+			continue
 		}
 
 		if _, ok := verdicts[verdict]; ok {

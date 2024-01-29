@@ -1,0 +1,13 @@
+2024-01-10T19:46:34-03:00	debug	gpt/gpt.go:42	Successfully got chat completion
+2024-01-10T19:46:37-03:00	debug	gpt/gpt.go:42	Successfully got chat completion
+2024-01-10T19:46:38-03:00	debug	gpt/gpt.go:42	Successfully got chat completion
+2024-01-10T19:46:39-03:00	debug	gpt/gpt.go:42	Successfully got chat completion
+2024-01-10T19:46:41-03:00	debug	gpt/gpt.go:42	Successfully got chat completion
+2024-01-10T19:46:48-03:00	debug	gpt/gpt.go:42	Successfully got chat completion
+2024-01-10T19:47:35-03:00	debug	gpt/gpt.go:42	Successfully got chat completion
+2024-01-10T19:47:51-03:00	debug	gpt/gpt.go:42	Successfully got chat completion
+2024-01-10T19:47:51-03:00	debug	stages/categorization.go:60	parsed categories	{"categories": {"ADC1":"G","Amplifier1":"C","Amplifier2":"C","Amplifier3":"C","Amplifier4":"C","Amplifier5":"C","Amplifier6":"C","Amplifier7":"C","Amplifier8":"C","ComputerInterface":"I","DataBuffer":"H","Filter1":"D","Filter10":"D","Filter11":"D","Filter12":"D","Filter13":"D","Filter14":"D","Filter15":"D","Filter16":"D","Filter2":"D","Filter3":"D","Filter4":"D","Filter5":"D","Filter6":"D","Filter7":"D","Filter8":"D","Filter9":"D","InstrumentationAmplifier1":"B","InstrumentationAmplifier2":"B","InstrumentationAmplifier3":"B","InstrumentationAmplifier4":"B","InstrumentationAmplifier5":"B","InstrumentationAmplifier6":"B","InstrumentationAmplifier7":"B","InstrumentationAmplifier8":"B","Multiplexer1":"E","Multiplexer2":"E","PressureSensor1":"A","PressureSensor2":"A","PressureSensor3":"A","PressureSensor4":"A","PressureSensor5":"A","PressureSensor6":"A","PressureSensor7":"A","PressureSensor8":"A","SampleAndHold1":"E","SampleAndHold2":"E","TemperatureSensor1":"A","TemperatureSensor2":"A","TemperatureSensor3":"A","TemperatureSensor4":"A","TemperatureSensor5":"A","TemperatureSensor6":"A","TemperatureSensor7":"A","TemperatureSensor8":"A"}}
+2024-01-10T19:47:58-03:00	debug	gpt/gpt.go:42	Successfully got chat completion
+2024-01-10T19:47:59-03:00	debug	gpt/gpt.go:42	Successfully got chat completion
+2024-01-10T19:48:00-03:00	debug	gpt/gpt.go:42	Successfully got chat completion
+2024-01-10T19:48:01-03:00	debug	gpt/gpt.go:42	Successfully got chat completion
